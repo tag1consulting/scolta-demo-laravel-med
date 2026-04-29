@@ -804,8 +804,7 @@ class LunarSeedConditions extends Command
     private function generateVariants(array $baseConditions, string $system, int $targetCount): array
     {
         $variants = [];
-        $generated = 0;
-        $baseCount = count($baseConditions);
+        $i = 0;
 
         $modifiers = [
             'acute' => 'Acute', 'chronic' => 'Chronic', 'secondary' => 'Secondary',
@@ -817,32 +816,30 @@ class LunarSeedConditions extends Command
 
         $severities = ['minor', 'minor', 'moderate', 'moderate', 'moderate', 'severe', 'severe', 'critical'];
 
-        while ($generated < $targetCount) {
-            $base = $baseConditions[$generated % $baseCount];
-            $modKey = array_keys($modifiers)[$generated % count($modifiers)];
-            $modLabel = $modifiers[$modKey];
+        foreach ($modifiers as $modKey => $modLabel) {
+            foreach ($baseConditions as $base) {
+                $variantName = "{$modLabel} " . ($base['lunar_variant_name'] ?? $base['name']);
+                $severity = $severities[$i % count($severities)];
 
-            $variantName = "{$modLabel} " . ($base['lunar_variant_name'] ?? $base['name']);
-            $severity = $severities[$generated % count($severities)];
-
-            $variants[] = [
-                'name' => "{$modLabel} " . $base['name'],
-                'lunar_variant_name' => $variantName,
-                'icd10_code' => $base['icd10_code'] ?? null,
-                'severity' => $severity,
-                'description' => "{$modLabel} presentation of {$base['name']} in lunar residents. " . Str::limit($base['description'], 300),
-                'lunar_risk_factors' => $base['lunar_risk_factors'] ?? "Lunar environmental factors including reduced gravity, radiation, and isolation may contribute to this presentation.",
-                'symptoms' => $base['symptoms'],
-                'lunar_symptoms' => $base['lunar_symptoms'] ?? null,
-                'diagnosis' => $base['diagnosis'],
-                'treatment' => $base['treatment'],
-                'treatment_lunar' => $base['treatment_lunar'] ?? null,
-                'evacuation_criteria' => $base['evacuation_criteria'] ?? null,
-                'prevention' => $base['prevention'] ?? null,
-                'is_emergency' => $severity === 'critical' && ($base['is_emergency'] ?? false),
-                'search_keywords' => ($base['search_keywords'] ?? '') . ", {$system}, {$modKey}",
-            ];
-            $generated++;
+                $variants[] = [
+                    'name' => "{$modLabel} " . $base['name'],
+                    'lunar_variant_name' => $variantName,
+                    'icd10_code' => $base['icd10_code'] ?? null,
+                    'severity' => $severity,
+                    'description' => "{$modLabel} presentation of {$base['name']} in lunar residents. " . Str::limit($base['description'], 300),
+                    'lunar_risk_factors' => $base['lunar_risk_factors'] ?? "Lunar environmental factors including reduced gravity, radiation, and isolation may contribute to this presentation.",
+                    'symptoms' => $base['symptoms'],
+                    'lunar_symptoms' => $base['lunar_symptoms'] ?? null,
+                    'diagnosis' => $base['diagnosis'],
+                    'treatment' => $base['treatment'],
+                    'treatment_lunar' => $base['treatment_lunar'] ?? null,
+                    'evacuation_criteria' => $base['evacuation_criteria'] ?? null,
+                    'prevention' => $base['prevention'] ?? null,
+                    'is_emergency' => $severity === 'critical' && ($base['is_emergency'] ?? false),
+                    'search_keywords' => ($base['search_keywords'] ?? '') . ", {$system}, {$modKey}",
+                ];
+                $i++;
+            }
         }
 
         return $variants;

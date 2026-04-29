@@ -45,7 +45,13 @@ class LunarSeedProcedures extends Command
     private function getProcedures(): array
     {
         $base = $this->getCoreProcedures();
-        return array_merge($base, $this->generateVariants($base, max(0, 2000 - count($base))));
+        $mods = [
+            'Pediatric', 'Geriatric Lunar Resident', 'Emergency', 'Elective',
+            'Post-EVA', 'Modified Low-Gravity', 'Radiation-Exposed Patient',
+            'Immunocompromised', 'Telemedicine-Guided', 'Austere Conditions',
+        ];
+        // Generate all unique modifier×base combinations (100 variants + 10 base = 110 total)
+        return array_merge($base, $this->generateVariants($base, $mods));
     }
 
     private function getCoreProcedures(): array
@@ -214,35 +220,32 @@ class LunarSeedProcedures extends Command
         ];
     }
 
-    private function generateVariants(array $base, int $count): array
+    private function generateVariants(array $base, array $mods): array
     {
         $variants = [];
-        $mods = [
-            'Pediatric', 'Geriatric Lunar Resident', 'Emergency', 'Elective',
-            'Post-EVA', 'Modified Low-Gravity', 'Radiation-Exposed Patient',
-            'Immunocompromised', 'Telemedicine-Guided', 'Austere Conditions',
-        ];
         $cats = ['first_aid', 'surgical', 'diagnostic', 'therapeutic', 'emergency'];
+        $i = 0;
 
-        for ($i = 0; $i < $count; $i++) {
-            $b = $base[$i % count($base)];
-            $mod = $mods[$i % count($mods)];
-            $variants[] = [
-                'name'               => "{$mod}: " . $b['name'],
-                'category'           => $cats[$i % count($cats)],
-                'risk_level'         => $b['risk_level'],
-                'description'        => "{$mod} adaptation of: " . Str::limit($b['description'], 200),
-                'indications'        => $b['indications'],
-                'contraindications'  => $b['contraindications'] ?? null,
-                'equipment_standard' => $b['equipment_standard'],
-                'equipment_lunar'    => $b['equipment_lunar'] ?? null,
-                'steps'              => $b['steps'],
-                'steps_lunar'        => $b['steps_lunar'] ?? null,
-                'telemedicine_points'=> $b['telemedicine_points'] ?? null,
-                'training_requirements' => $b['training_requirements'] ?? null,
-                'complications'      => $b['complications'] ?? null,
-                'search_keywords'    => ($b['search_keywords'] ?? '') . ", {$mod}",
-            ];
+        foreach ($mods as $mod) {
+            foreach ($base as $b) {
+                $variants[] = [
+                    'name'               => "{$mod}: " . $b['name'],
+                    'category'           => $cats[$i % count($cats)],
+                    'risk_level'         => $b['risk_level'],
+                    'description'        => "{$mod} adaptation of: " . Str::limit($b['description'], 200),
+                    'indications'        => $b['indications'],
+                    'contraindications'  => $b['contraindications'] ?? null,
+                    'equipment_standard' => $b['equipment_standard'],
+                    'equipment_lunar'    => $b['equipment_lunar'] ?? null,
+                    'steps'              => $b['steps'],
+                    'steps_lunar'        => $b['steps_lunar'] ?? null,
+                    'telemedicine_points'=> $b['telemedicine_points'] ?? null,
+                    'training_requirements' => $b['training_requirements'] ?? null,
+                    'complications'      => $b['complications'] ?? null,
+                    'search_keywords'    => ($b['search_keywords'] ?? '') . ", {$mod}",
+                ];
+                $i++;
+            }
         }
         return $variants;
     }

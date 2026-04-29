@@ -66,8 +66,7 @@ class LunarSeedMedications extends Command
     private function getMedications(): array
     {
         $base = $this->getBaseMedications();
-        $variants = $this->generateVariants($base, count($base) > 2800 ? 0 : 2800 - count($base));
-        return array_merge($base, $variants);
+        return array_merge($base, $this->generateVariants($base));
     }
 
     private function getBaseMedications(): array
@@ -312,10 +311,10 @@ class LunarSeedMedications extends Command
         ];
     }
 
-    private function generateVariants(array $base, int $count): array
+    private function generateVariants(array $base): array
     {
         $variants = [];
-        $baseCount = count($base);
+        $i = 0;
 
         $dosageModifiers = [
             'Extended-Release', 'IV Formulation', 'Topical', 'Pediatric', 'Low-Dose',
@@ -326,32 +325,35 @@ class LunarSeedMedications extends Command
             'Biosimilar', 'Modified Release', 'Enteric-Coated', 'Ophthalmic',
         ];
 
-        for ($i = 0; $i < $count; $i++) {
-            $baseItem = $base[$i % $baseCount];
-            $mod = $dosageModifiers[$i % count($dosageModifiers)];
-            $ext = $classExtensions[$i % count($classExtensions)];
-
-            $newName = "{$mod} " . str_replace(['Extended-Release ', 'IV Formulation ', 'Topical ', 'Pediatric ', 'Low-Dose ', 'High-Dose ', 'Combination ', 'Sustained-Release ', 'Sublingual ', 'Nasal '], '', $baseItem['generic_name']);
-
-            $variants[] = [
-                'generic_name'       => $newName,
-                'brand_names'        => null,
-                'drug_class'         => "{$baseItem['drug_class']} — {$ext}",
-                'mechanism'          => $baseItem['mechanism'],
-                'indications'        => "{$mod} formulation. " . $baseItem['indications'],
-                'dosing_standard'    => "See {$mod} prescribing information. " . Str::limit($baseItem['dosing_standard'], 200),
-                'dosing_lunar'       => $baseItem['dosing_lunar'] ?? null,
-                'storage_standard'   => $baseItem['storage_standard'] ?? null,
-                'storage_lunar'      => $baseItem['storage_lunar'] ?? null,
-                'supply_chain_notes' => $baseItem['supply_chain_notes'] ?? null,
-                'interactions'       => $baseItem['interactions'] ?? null,
-                'contraindications'  => $baseItem['contraindications'] ?? null,
-                'side_effects'       => $baseItem['side_effects'] ?? null,
-                'alternatives'       => $baseItem['alternatives'] ?? null,
-                'who_essential'      => false,
-                'lunar_critical'     => $baseItem['lunar_critical'] ?? false,
-                'search_keywords'    => ($baseItem['search_keywords'] ?? '') . ", {$mod}, formulation",
-            ];
+        foreach ($dosageModifiers as $modIdx => $mod) {
+            foreach ($base as $baseItem) {
+                $ext = $classExtensions[$i % count($classExtensions)];
+                $baseName = str_replace(
+                    array_map(fn($m) => "$m ", $dosageModifiers),
+                    '',
+                    $baseItem['generic_name']
+                );
+                $variants[] = [
+                    'generic_name'       => "{$mod} {$baseName}",
+                    'brand_names'        => null,
+                    'drug_class'         => "{$baseItem['drug_class']} — {$ext}",
+                    'mechanism'          => $baseItem['mechanism'],
+                    'indications'        => "{$mod} formulation. " . $baseItem['indications'],
+                    'dosing_standard'    => "See {$mod} prescribing information. " . Str::limit($baseItem['dosing_standard'], 200),
+                    'dosing_lunar'       => $baseItem['dosing_lunar'] ?? null,
+                    'storage_standard'   => $baseItem['storage_standard'] ?? null,
+                    'storage_lunar'      => $baseItem['storage_lunar'] ?? null,
+                    'supply_chain_notes' => $baseItem['supply_chain_notes'] ?? null,
+                    'interactions'       => $baseItem['interactions'] ?? null,
+                    'contraindications'  => $baseItem['contraindications'] ?? null,
+                    'side_effects'       => $baseItem['side_effects'] ?? null,
+                    'alternatives'       => $baseItem['alternatives'] ?? null,
+                    'who_essential'      => false,
+                    'lunar_critical'     => $baseItem['lunar_critical'] ?? false,
+                    'search_keywords'    => ($baseItem['search_keywords'] ?? '') . ", {$mod}, formulation",
+                ];
+                $i++;
+            }
         }
 
         return $variants;
