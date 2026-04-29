@@ -43,28 +43,14 @@
         </div>
     </div>
 
-    {{-- Scolta search widget placeholder --}}
+    {{-- Scolta search widget --}}
     <div class="bg-lunar-900 border border-lunar-700 rounded-xl p-6">
         <div class="flex items-center gap-3 mb-4">
             <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
             <span class="text-xs text-lunar-400 font-medium tracking-wider uppercase">Scolta AI Search</span>
         </div>
 
-        @if($query)
-            <p class="text-lunar-300 text-sm mb-4">Searching for: <strong class="text-lunar-100">"{{ $query }}"</strong></p>
-            <p class="text-xs text-lunar-500 mb-6">Scolta is expanding your query and re-ranking results by lunar medical relevance. The search index will populate after running <code class="text-blue-400">php artisan scolta:build</code>.</p>
-        @else
-            <p class="text-lunar-400 text-sm">Enter a query above to see Scolta's AI-powered results.</p>
-        @endif
-
-        {{-- Scolta widget target --}}
-        <div id="scolta-results" class="min-h-32">
-            @if($query)
-            <div class="text-center py-8 text-lunar-600 text-sm">
-                Search index not yet built. Run <code class="text-blue-400">ddev artisan scolta:build</code> to index content.
-            </div>
-            @endif
-        </div>
+        <x-scolta::search />
     </div>
 
     {{-- How Scolta works explainer --}}
@@ -88,6 +74,3 @@
 </div>
 @endsection
 
-@push('scripts')
-{{-- Scolta search integration will be added after index is built --}}
-@endpush
