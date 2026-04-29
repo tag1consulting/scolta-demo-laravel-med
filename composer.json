@@ -6,11 +6,11 @@
     "license": "MIT",
     "repositories": {
         "scolta-php": {
-            "type": "path",
+            "type": "vcs",
             "url": "/mnt/packages/scolta-php"
         },
         "scolta-laravel": {
-            "type": "path",
+            "type": "vcs",
             "url": "/mnt/packages/scolta-laravel"
         }
     },
@@ -18,7 +18,7 @@
         "php": "^8.3",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
-        "tag1/scolta-laravel": "@dev"
+        "tag1/scolta-laravel": "0.3.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

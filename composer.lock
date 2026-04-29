@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b7eb1675b885d2ccdbff87d3f613c2c",
+    "content-hash": "171d934fc3a37157e44f3137f4b9d9ce",
     "packages": [
         {
             "name": "brick/math",
@@ -5851,11 +5851,11 @@
         },
         {
             "name": "tag1/scolta-laravel",
-            "version": "0.3.6-dev",
-            "dist": {
-                "type": "path",
+            "version": "0.3.6",
+            "source": {
+                "type": "git",
                 "url": "/mnt/packages/scolta-laravel",
-                "reference": "b74382112922e297583c730fa043b990bb33b787"
+                "reference": "83f19b16a6f735f09554a32f04f7d5e02752dfd7"
             },
             "require": {
                 "illuminate/console": "^11.0|^12.0",
@@ -5912,17 +5912,15 @@
                 }
             ],
             "description": "Scolta AI Search for Laravel — zero-infrastructure AI-powered search with Pagefind",
-            "transport-options": {
-                "relative": false
-            }
+            "time": "2026-04-29T16:35:21+00:00"
         },
         {
             "name": "tag1/scolta-php",
-            "version": "0.3.6-dev",
-            "dist": {
-                "type": "path",
+            "version": "0.3.6",
+            "source": {
+                "type": "git",
                 "url": "/mnt/packages/scolta-php",
-                "reference": "8c996f092f1a2c384e5f431cc0bc50b2931b1ca2"
+                "reference": "f3076aeb87f81d9a424710f1c69c861bafc0b25e"
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.0",
@@ -5972,9 +5970,7 @@
                 "MIT"
             ],
             "description": "AI-powered search with Pagefind — PHP language binding",
-            "transport-options": {
-                "relative": false
-            }
+            "time": "2026-04-29T16:33:14+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -8715,9 +8711,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "tag1/scolta-laravel": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
