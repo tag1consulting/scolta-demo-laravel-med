@@ -7,8 +7,14 @@
 
 {{-- Hero --}}
 <section class="relative overflow-hidden bg-lunar-950 border-b border-lunar-800">
-    {{-- Background crater texture --}}
-    <div class="absolute inset-0 bg-lunar-surface opacity-60 pointer-events-none"></div>
+    {{-- Background: NASA Apollo photograph of lunar surface (public domain) --}}
+    <div class="absolute inset-0 pointer-events-none">
+        <img src="{{ asset('images/hero-banner.webp') }}"
+             alt="Lunar surface — NASA Apollo photograph"
+             class="w-full h-full object-cover opacity-20"
+             loading="eager">
+        <div class="absolute inset-0 bg-gradient-to-r from-lunar-950 via-lunar-950/80 to-lunar-950/40"></div>
+    </div>
     <div class="absolute top-8 right-8 w-64 h-64 rounded-full bg-gradient-to-br from-lunar-800/20 to-transparent pointer-events-none" style="box-shadow: inset 0 4px 20px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.03)"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">

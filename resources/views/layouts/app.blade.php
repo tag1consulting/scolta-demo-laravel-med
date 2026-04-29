@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Medical On The Moon') — Lunar Medical Reference</title>
     <meta name="description" content="@yield('description', 'Comprehensive medical reference for Moon residents, workers, and explorers. Powered by Scolta AI search.')">
+    <meta property="og:title" content="@yield('title', 'Medical On The Moon')">
+    <meta property="og:description" content="@yield('description', 'Comprehensive lunar medical reference for Moon residents, workers, and explorers.')">
+    <meta property="og:image" content="{{ asset('images/og-image.webp') }}">
+    <meta property="og:type" content="website">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full bg-lunar-950 text-lunar-100 font-sans antialiased">

@@ -27,10 +27,16 @@
 - Published peer-reviewed literature on SANS, bone loss, cardiovascular deconditioning
 
 ## Images
-No images are included in Session 1 of this demo. When images are added:
-- Sources will be limited to: CDC Public Health Image Library (PHIL), NLM Open-i, Wikimedia Commons Medical
-- All images will be credited with source, author (where available), and license
-- Images will be web-optimized: max 800px, WebP format
+
+All images are public domain. Optimized to WebP format, max 1200px width.
+
+### Homepage Hero / OG Image
+- **Source photograph:** NASA Apollo lunar surface photograph (AS11-40-5931)
+  - Credit: NASA / Apollo 11 Mission, July 1969
+  - License: Public Domain (US Government work)
+  - Source: NASA Image and Video Library — https://images.nasa.gov/
+  - Files: `public/images/hero-banner.webp`, `public/images/hero-banner-dark.webp`, `public/images/og-image.webp`
+  - Processing: cropped to 1200×400px banner and 800×800px square; brightness reduced for dark-theme overlay
 
 ## Content Generation
 - Base medical data: as listed above (public domain sources)
