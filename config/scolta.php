@@ -56,8 +56,8 @@ return [
     |
     */
 
-    'site_name' => env('SCOLTA_SITE_NAME', env('APP_NAME', 'Laravel')),
-    'site_description' => env('SCOLTA_SITE_DESCRIPTION', 'website'),
+    'site_name' => env('SCOLTA_SITE_NAME', 'Medical On The Moon'),
+    'site_description' => env('SCOLTA_SITE_DESCRIPTION', 'Comprehensive lunar medical reference for Moon residents, workers, and explorers. Covers conditions, medications, procedures, diagnostics, and occupational health adapted for 1/6 gravity, radiation exposure, and sealed habitat life. Includes emergency protocols, mental health, and Earth-to-Moon telemedicine guidance.'),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,14 +175,14 @@ return [
     */
 
     'scoring' => [
-        'title_match_boost' => 1.0,
+        'title_match_boost' => 2.0,
         'title_all_terms_multiplier' => 1.5,
-        'content_match_boost' => 0.4,
-        'recency_boost_max' => 0.5,
-        'recency_half_life_days' => 365,
-        'recency_penalty_after_days' => 1825,
-        'recency_max_penalty' => 0.3,
-        'expand_primary_weight' => 0.5,
+        'content_match_boost' => 0.5,
+        'recency_boost_max' => 0.1,
+        'recency_half_life_days' => 3650,
+        'recency_penalty_after_days' => 36500,
+        'recency_max_penalty' => 0.05,
+        'expand_primary_weight' => 0.6,
 
         // Language-aware stop words (0.2.2+)
         // ISO 639-1 code for stop word filtering. Supported: ar, ca, da, de, el,
@@ -208,9 +208,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'excerpt_length' => 300,
-    'results_per_page' => 10,
-    'max_pagefind_results' => 50,
+    'excerpt_length' => 350,
+    'results_per_page' => 12,
+    'max_pagefind_results' => 60,
     'ai_summary_top_n' => 10,
     'ai_summary_max_chars' => 4000,
 
