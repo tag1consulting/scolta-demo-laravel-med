@@ -164,4 +164,11 @@
     .filter-pill.active {
         @apply border-blue-600 text-blue-300 bg-blue-900/30;
     }
+
+    /* Prevent long search queries from overflowing the results header */
+    #scolta-search .scolta-results-header > span:first-child {
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
 }
