@@ -1048,6 +1048,15 @@
 
     renderResults(true);
     console.log(`[scolta:expand] Merged ${allScoredResults.length} results from primary + ${validTerms.length} expanded terms`);
+
+    // Patch: if Phase 1 found no results, summarizeResults was called with an
+    // empty array and returned early.  Now that expansion found results, trigger
+    // the summary.  Guard on display===none so we don't re-summarize when Phase 1
+    // already produced a summary.
+    if (allScoredResults.length > 0 && els.aiSummary.style.display === "none") {
+      const expandedLabel = validTerms.filter(t => t.toLowerCase() !== originalQuery.toLowerCase());
+      summarizeResults(originalQuery, allScoredResults, expandedLabel);
+    }
   }
 
   // --- Main search ---
