@@ -169,6 +169,13 @@
 
 /* Scolta JS-injected classes are not in blade templates, so they must live
    outside @layer to avoid Tailwind purging them. */
+
+/* The grid item wrapping the results has min-width:auto by default,
+   letting long content (e.g. a long query in the results header) push
+   past the column boundary.  min-width:0 lets it shrink to fit. */
+#scolta-search .scolta-layout > div {
+    min-width: 0;
+}
 #scolta-search .scolta-results-header > span:first-child {
     min-width: 0;
     overflow-wrap: break-word;
