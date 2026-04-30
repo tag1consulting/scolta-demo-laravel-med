@@ -7,11 +7,11 @@
     "repositories": {
         "scolta-php": {
             "type": "vcs",
-            "url": "/mnt/packages/scolta-php"
+            "url": "https://github.com/tag1consulting/scolta-php"
         },
         "scolta-laravel": {
             "type": "vcs",
-            "url": "/mnt/packages/scolta-laravel"
+            "url": "https://github.com/tag1consulting/scolta-laravel"
         }
     },
     "require": {

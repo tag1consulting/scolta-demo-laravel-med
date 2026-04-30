@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "171d934fc3a37157e44f3137f4b9d9ce",
+    "content-hash": "2991193131aa3f6a151bbe84183a6b50",
     "packages": [
         {
             "name": "brick/math",
@@ -5854,8 +5854,14 @@
             "version": "0.3.6",
             "source": {
                 "type": "git",
-                "url": "/mnt/packages/scolta-laravel",
+                "url": "https://github.com/tag1consulting/scolta-laravel.git",
                 "reference": "83f19b16a6f735f09554a32f04f7d5e02752dfd7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tag1consulting/scolta-laravel/zipball/83f19b16a6f735f09554a32f04f7d5e02752dfd7",
+                "reference": "83f19b16a6f735f09554a32f04f7d5e02752dfd7",
+                "shasum": ""
             },
             "require": {
                 "illuminate/console": "^11.0|^12.0",
@@ -5912,6 +5918,10 @@
                 }
             ],
             "description": "Scolta AI Search for Laravel — zero-infrastructure AI-powered search with Pagefind",
+            "support": {
+                "source": "https://github.com/tag1consulting/scolta-laravel/tree/v0.3.6",
+                "issues": "https://github.com/tag1consulting/scolta-laravel/issues"
+            },
             "time": "2026-04-29T16:35:21+00:00"
         },
         {
@@ -5919,8 +5929,14 @@
             "version": "0.3.6",
             "source": {
                 "type": "git",
-                "url": "/mnt/packages/scolta-php",
+                "url": "https://github.com/tag1consulting/scolta-php.git",
                 "reference": "f3076aeb87f81d9a424710f1c69c861bafc0b25e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tag1consulting/scolta-php/zipball/f3076aeb87f81d9a424710f1c69c861bafc0b25e",
+                "reference": "f3076aeb87f81d9a424710f1c69c861bafc0b25e",
+                "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.0",
@@ -5970,6 +5986,10 @@
                 "MIT"
             ],
             "description": "AI-powered search with Pagefind — PHP language binding",
+            "support": {
+                "source": "https://github.com/tag1consulting/scolta-php/tree/v0.3.6",
+                "issues": "https://github.com/tag1consulting/scolta-php/issues"
+            },
             "time": "2026-04-29T16:33:14+00:00"
         },
         {
