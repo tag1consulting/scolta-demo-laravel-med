@@ -21,13 +21,13 @@
 
 @layer components {
     .nav-link {
-        @apply px-3 py-2 rounded-md text-lunar-300 hover:text-lunar-100 hover:bg-lunar-800 transition-colors font-medium;
+        @apply px-3 py-2 rounded-md text-blue-100/70 hover:text-white hover:bg-white/10 transition-colors font-medium;
     }
     .nav-link.active {
-        @apply text-lunar-100 bg-lunar-800;
+        @apply text-white bg-white/15;
     }
     .nav-link-mobile {
-        @apply text-lunar-400 hover:text-lunar-100 py-1;
+        @apply text-blue-200/60 hover:text-white py-1 transition-colors;
     }
 
     /* Card styles */
