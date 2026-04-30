@@ -17,14 +17,14 @@
     <header class="mb-10">
         <div class="flex flex-wrap items-center gap-3 mb-3">
             <span class="badge badge-lunar capitalize">{{ str_replace('_', ' ', $anatomy->body_system) }}</span>
-            <span class="badge bg-lunar-800 text-lunar-300 border-lunar-700">{{ $anatomy->structure_type }}</span>
+            <span class="badge bg-lunar-800 text-lunar-300 border border-lunar-700">{{ $anatomy->structure_type }}</span>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-lunar-50 mb-2">{{ $anatomy->name }}</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold text-lunar-100 mb-2">{{ $anatomy->name }}</h1>
     </header>
 
     <div class="lunar-prose">
 
-        <div class="bg-lunar-900/60 border border-lunar-800 rounded-xl p-6 mb-8">
+        <div class="bg-lunar-900 border border-lunar-700 rounded-xl p-6 mb-8">
             <p class="text-lunar-200">{{ $anatomy->description }}</p>
         </div>
 
@@ -35,21 +35,21 @@
         <h2>Lunar Adaptations</h2>
         <div class="space-y-4">
             @if($anatomy->lunar_adaptation_arrival)
-            <div class="bg-lunar-900/60 border border-lunar-800 rounded-lg p-5">
+            <div class="bg-lunar-900 border border-lunar-700 rounded-lg p-5">
                 <p class="section-header">On Arrival (First Weeks)</p>
-                <p class="text-sm text-lunar-300">{{ $anatomy->lunar_adaptation_arrival }}</p>
+                <p class="text-sm text-lunar-200">{{ $anatomy->lunar_adaptation_arrival }}</p>
             </div>
             @endif
             @if($anatomy->lunar_adaptation_6m)
-            <div class="bg-blue-950/20 border border-blue-900/50 rounded-lg p-5">
-                <p class="section-header text-blue-400">6-Month Resident</p>
-                <p class="text-sm text-blue-200/80">{{ $anatomy->lunar_adaptation_6m }}</p>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-5">
+                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">6-Month Resident</p>
+                <p class="text-sm text-slate-700">{{ $anatomy->lunar_adaptation_6m }}</p>
             </div>
             @endif
             @if($anatomy->lunar_adaptation_2y)
-            <div class="bg-purple-950/20 border border-purple-900/50 rounded-lg p-5">
-                <p class="section-header text-purple-400">Long-Term Resident (2+ Years)</p>
-                <p class="text-sm text-purple-200/80">{{ $anatomy->lunar_adaptation_2y }}</p>
+            <div class="bg-purple-50 border border-purple-200 rounded-lg p-5">
+                <p class="text-xs text-purple-600 font-semibold mb-2 tracking-wider uppercase">Long-Term Resident (2+ Years)</p>
+                <p class="text-sm text-slate-700">{{ $anatomy->lunar_adaptation_2y }}</p>
             </div>
             @endif
         </div>
@@ -57,8 +57,8 @@
 
     </div>
 
-    <div class="mt-12 pt-6 border-t border-lunar-800">
-        <a href="{{ route('anatomy.index') }}" class="text-lunar-500 hover:text-lunar-300 transition-colors text-sm">← Anatomy Browser</a>
+    <div class="mt-12 pt-6 border-t border-lunar-700">
+        <a href="{{ route('anatomy.index') }}" class="text-lunar-400 hover:text-lunar-200 transition-colors text-sm">← Anatomy Browser</a>
     </div>
 </div>
 @endsection

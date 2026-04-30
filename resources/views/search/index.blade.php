@@ -9,11 +9,11 @@
     <h1 class="text-3xl font-bold text-lunar-100 mb-2">Lunar Medical Search</h1>
     <p class="text-lunar-400 text-sm mb-8">Powered by <strong class="text-lunar-300">Scolta</strong> — AI query expansion and re-ranking for lunar medical content.</p>
 
-    {{-- Scolta search widget (contains the only search bar) --}}
-    <div class="bg-[#141420] border border-[#2c2c44] rounded-xl p-6 mb-6">
+    {{-- Scolta search widget --}}
+    <div class="bg-white border border-lunar-700 rounded-xl p-6 mb-6 shadow-sm">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
-            <span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Scolta AI Search</span>
+            <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+            <span class="text-xs text-lunar-400 font-semibold tracking-wider uppercase">Scolta AI Search</span>
         </div>
         <x-scolta::search />
     </div>

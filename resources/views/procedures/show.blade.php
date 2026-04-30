@@ -21,12 +21,12 @@
             <span class="badge badge-risk-{{ $procedure->risk_level }}">{{ ucfirst($procedure->risk_level) }} Risk</span>
             <span class="badge badge-lunar">{{ ucwords(str_replace('_', ' ', $procedure->category)) }}</span>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-lunar-50 mb-2">{{ $procedure->name }}</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold text-lunar-100 mb-2">{{ $procedure->name }}</h1>
     </header>
 
     <div class="lunar-prose">
 
-        <div class="bg-lunar-900/60 border border-lunar-800 rounded-xl p-6 mb-8">
+        <div class="bg-lunar-900 border border-lunar-700 rounded-xl p-6 mb-8">
             <p class="text-lunar-200">{{ $procedure->description }}</p>
         </div>
 
@@ -40,14 +40,14 @@
 
         <h2>Equipment Required</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="bg-lunar-900/60 border border-lunar-800 rounded-lg p-4">
+            <div class="bg-lunar-900 border border-lunar-700 rounded-lg p-4">
                 <p class="section-header">Standard Equipment</p>
-                <p class="text-sm text-lunar-300">{{ $procedure->equipment_standard }}</p>
+                <p class="text-sm text-lunar-200">{{ $procedure->equipment_standard }}</p>
             </div>
             @if($procedure->equipment_lunar)
-            <div class="bg-blue-950/30 border border-blue-800/40 rounded-lg p-4">
-                <p class="section-header text-blue-400">Lunar Medical Bay Substitutions</p>
-                <p class="text-sm text-blue-200/80">{{ $procedure->equipment_lunar }}</p>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar Medical Bay Substitutions</p>
+                <p class="text-sm text-slate-700">{{ $procedure->equipment_lunar }}</p>
             </div>
             @endif
         </div>
@@ -56,15 +56,15 @@
         <p>{{ $procedure->steps }}</p>
 
         @if($procedure->steps_lunar)
-        <div class="bg-blue-950/30 border border-blue-800/40 rounded-lg p-5 mt-4">
-            <p class="section-header text-blue-400">Lunar Technique Modifications (1/6 Gravity)</p>
-            <p class="text-sm text-blue-200/80">{{ $procedure->steps_lunar }}</p>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 mt-4">
+            <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar Technique Modifications (1/6 Gravity)</p>
+            <p class="text-sm text-slate-700">{{ $procedure->steps_lunar }}</p>
         </div>
         @endif
 
         @if($procedure->telemedicine_points)
         <h2>Telemedicine Guidance Points</h2>
-        <div class="bg-lunar-900/60 border border-lunar-800 rounded-lg p-5">
+        <div class="bg-lunar-900 border border-lunar-700 rounded-lg p-5">
             <p class="text-xs text-lunar-500 mb-3">Contact Earth Medical Relay (+1.3s delay) at these critical decision points:</p>
             <p class="text-lunar-200 text-sm">{{ $procedure->telemedicine_points }}</p>
         </div>
@@ -82,8 +82,8 @@
 
     </div>
 
-    <div class="mt-12 pt-6 border-t border-lunar-800">
-        <a href="{{ route('procedures.index') }}" class="text-lunar-500 hover:text-lunar-300 transition-colors text-sm">← All Procedures</a>
+    <div class="mt-12 pt-6 border-t border-lunar-700">
+        <a href="{{ route('procedures.index') }}" class="text-lunar-400 hover:text-lunar-200 transition-colors text-sm">← All Procedures</a>
     </div>
 </div>
 @endsection

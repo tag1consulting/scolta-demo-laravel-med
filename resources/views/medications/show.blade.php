@@ -16,9 +16,9 @@
         <div class="flex flex-wrap items-center gap-3 mb-3">
             <span class="badge badge-lunar">{{ $medication->drug_class }}</span>
             @if($medication->lunar_critical) <span class="badge badge-lunar">⚠ Lunar Critical</span> @endif
-            @if($medication->who_essential) <span class="badge bg-green-900/40 text-green-400 border-green-800">WHO Essential</span> @endif
+            @if($medication->who_essential) <span class="badge bg-green-50 text-green-700 border border-green-200">WHO Essential</span> @endif
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-lunar-50 mb-2">{{ $medication->generic_name }}</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold text-lunar-100 mb-2">{{ $medication->generic_name }}</h1>
         @if($medication->brand_names)
         <p class="text-lunar-500 text-sm">Also known as: {{ $medication->brand_names }}</p>
         @endif
@@ -26,7 +26,7 @@
 
     <div class="lunar-prose">
 
-        <div class="bg-lunar-900/60 border border-lunar-800 rounded-xl p-6 mb-8">
+        <div class="bg-lunar-900 border border-lunar-700 rounded-xl p-6 mb-8">
             <h3 class="section-header">Mechanism of Action</h3>
             <p class="text-lunar-200">{{ $medication->mechanism }}</p>
         </div>
@@ -36,14 +36,14 @@
 
         <h2>Dosing</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="bg-lunar-900/60 border border-lunar-800 rounded-lg p-4">
+            <div class="bg-lunar-900 border border-lunar-700 rounded-lg p-4">
                 <p class="section-header">Standard (Earth)</p>
-                <p class="text-sm text-lunar-300">{{ $medication->dosing_standard }}</p>
+                <p class="text-sm text-lunar-200">{{ $medication->dosing_standard }}</p>
             </div>
             @if($medication->dosing_lunar)
-            <div class="bg-blue-950/30 border border-blue-800/40 rounded-lg p-4">
-                <p class="section-header text-blue-400">Lunar Protocol</p>
-                <p class="text-sm text-blue-200/80">{{ $medication->dosing_lunar }}</p>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar Protocol</p>
+                <p class="text-sm text-slate-700">{{ $medication->dosing_lunar }}</p>
             </div>
             @endif
         </div>
@@ -52,15 +52,15 @@
         <h2>Storage</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             @if($medication->storage_standard)
-            <div class="bg-lunar-900/60 border border-lunar-800 rounded-lg p-4">
+            <div class="bg-lunar-900 border border-lunar-700 rounded-lg p-4">
                 <p class="section-header">Standard</p>
-                <p class="text-sm text-lunar-300">{{ $medication->storage_standard }}</p>
+                <p class="text-sm text-lunar-200">{{ $medication->storage_standard }}</p>
             </div>
             @endif
             @if($medication->storage_lunar)
-            <div class="bg-blue-950/30 border border-blue-800/40 rounded-lg p-4">
-                <p class="section-header text-blue-400">Lunar (Radiation + Temperature)</p>
-                <p class="text-sm text-blue-200/80">{{ $medication->storage_lunar }}</p>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar (Radiation + Temperature)</p>
+                <p class="text-sm text-slate-700">{{ $medication->storage_lunar }}</p>
             </div>
             @endif
         </div>
@@ -93,8 +93,8 @@
 
     </div>
 
-    <div class="mt-12 pt-6 border-t border-lunar-800">
-        <a href="{{ route('medications.index') }}" class="text-lunar-500 hover:text-lunar-300 transition-colors text-sm">← All Medications</a>
+    <div class="mt-12 pt-6 border-t border-lunar-700">
+        <a href="{{ route('medications.index') }}" class="text-lunar-400 hover:text-lunar-200 transition-colors text-sm">← All Medications</a>
     </div>
 </div>
 @endsection

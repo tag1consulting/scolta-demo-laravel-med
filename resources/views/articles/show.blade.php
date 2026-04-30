@@ -15,9 +15,9 @@
     <header class="mb-10">
         <div class="flex flex-wrap items-center gap-3 mb-4">
             <span class="badge badge-lunar">{{ str_replace('_', ' ', $article->research_type) }}</span>
-            @if($article->featured) <span class="badge bg-amber-900/40 text-amber-300 border-amber-800">Featured</span> @endif
+            @if($article->featured) <span class="badge bg-amber-50 text-amber-700 border border-amber-200">Featured</span> @endif
         </div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-lunar-50 leading-tight mb-4">{{ $article->title }}</h1>
+        <h1 class="text-2xl sm:text-3xl font-bold text-lunar-100 leading-tight mb-4">{{ $article->title }}</h1>
         <div class="text-sm text-lunar-400">
             <span class="font-medium text-lunar-300">{{ $article->author_name }}</span>
             @if($article->author_affiliation) · {{ $article->author_affiliation }} @endif

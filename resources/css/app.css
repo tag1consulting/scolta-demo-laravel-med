@@ -75,76 +75,76 @@
         @apply bg-blue-600 border-blue-600 text-white;
     }
 
-    /* ── Scolta / Pagefind dark theme ─────────────────────────────────────
+    /* ── Scolta / Pagefind light theme ───────────────────────────────────
        CSS custom properties alone don't beat the :is(*, #\#) specificity
        hack in pagefind-component-ui.css, and several scolta.css colors are
        hardcoded. Use !important direct selectors scoped to #scolta-search. */
 
-    /* Input field — the main offender */
+    /* Input field */
     #scolta-search input,
     #scolta-search input[type="text"],
     #scolta-search input[type="search"],
     #scolta-search .pf-input,
     #scolta-search .pf-searchbox-input {
-        background-color: #1e1e32 !important;
-        color: #e8e8ee !important;
-        border-color: #2c2c44 !important;
-        caret-color: #60a5fa !important;
+        background-color: #ffffff !important;
+        color: #1b3860 !important;
+        border-color: #c8daea !important;
+        caret-color: #2563eb !important;
     }
     #scolta-search input::placeholder,
     #scolta-search .pf-input::placeholder,
     #scolta-search .pf-searchbox-input::placeholder {
-        color: #585870 !important;
+        color: #8dafc8 !important;
     }
 
     /* Container and result cards */
     #scolta-search,
     #scolta-search .scolta-wrapper,
     #scolta-search .scolta-search-box,
-    #scolta-search .scolta-result-card,
     #scolta-search .scolta-load-more,
     #scolta-search .pf-input-wrapper {
-        background-color: #141420 !important;
-        color: #e8e8ee !important;
+        background-color: #ffffff !important;
+        color: #1b3860 !important;
     }
     #scolta-search .scolta-result-card {
-        background-color: #1e1e32 !important;
-        border-color: #2c2c44 !important;
+        background-color: #f2f7fc !important;
+        border-color: #c8daea !important;
+        color: #1b3860 !important;
     }
 
-    /* Text content — hardcoded grays in scolta.css */
-    #scolta-search .scolta-result-excerpt { color: #c8c8d4 !important; }
-    #scolta-search .scolta-result-url     { color: #60a5fa !important; }
-    #scolta-search .scolta-result-title   { color: #93c5fd !important; }
+    /* Text content */
+    #scolta-search .scolta-result-excerpt { color: #2c5280 !important; }
+    #scolta-search .scolta-result-url     { color: #2563eb !important; }
+    #scolta-search .scolta-result-title   { color: #1b3860 !important; }
     #scolta-search .scolta-result-meta,
     #scolta-search .scolta-result-date,
     #scolta-search .scolta-filter-count,
-    #scolta-search .scolta-results-header { color: #787890 !important; }
-    #scolta-search .scolta-no-results     { color: #a0a0b4 !important; }
+    #scolta-search .scolta-results-header { color: #5f7f97 !important; }
+    #scolta-search .scolta-no-results     { color: #5f7f97 !important; }
 
     /* Hover and interactive states */
-    #scolta-search .scolta-search-clear:hover { background: #2c2c44 !important; color: #e8e8ee !important; }
-    #scolta-search .scolta-search-clear       { color: #787890 !important; }
+    #scolta-search .scolta-search-clear:hover { background: #e3edf6 !important; color: #1b3860 !important; }
+    #scolta-search .scolta-search-clear       { color: #8dafc8 !important; }
 
     /* AI summary block */
     #scolta-search .scolta-ai-summary {
-        background: linear-gradient(135deg, #1a1a2e 0%, #141420 50%, #1a1a2e 100%) !important;
-        border-color: #2c2c44 !important;
+        background: linear-gradient(135deg, #eef5ff 0%, #f2f7fc 50%, #eef5ff 100%) !important;
+        border-color: #c8daea !important;
     }
-    #scolta-search .scolta-ai-summary-text { color: #c8c8d4 !important; }
+    #scolta-search .scolta-ai-summary-text { color: #2c5280 !important; }
 
     /* Highlight marks in excerpts */
     #scolta-search mark,
     #scolta-search .scolta-result-excerpt mark {
-        background: rgba(96, 165, 250, 0.2) !important;
-        color: #e8e8ee !important;
+        background: rgba(37, 99, 235, 0.12) !important;
+        color: #1b3860 !important;
     }
 
     /* Pagefind dropdown / hover rows */
     #scolta-search .pf-dropdown-item,
     #scolta-search [class*="pf-"] {
-        background-color: #141420 !important;
-        color: #e8e8ee !important;
+        background-color: #ffffff !important;
+        color: #1b3860 !important;
     }
 
     /* Filter pills */
