@@ -17,17 +17,17 @@ export default {
             },
             colors: {
                 lunar: {
-                    50:  '#f8f8fa',
-                    100: '#e8e8ee',
-                    200: '#c8c8d4',
-                    300: '#a0a0b4',
-                    400: '#787890',
-                    500: '#585870',
-                    600: '#404058',
-                    700: '#2c2c44',
-                    800: '#1e1e32',
-                    900: '#141420',
-                    950: '#0a0a14',
+                    50:  '#0e2040',  // deep navy  — hero / darkest accent
+                    100: '#1b3860',  // navy        — primary headings
+                    200: '#2c5280',  // dark blue   — body text, strong labels
+                    300: '#3d6898',  // medium blue  — secondary text, hover
+                    400: '#507da8',  // mid blue    — links, tertiary text
+                    500: '#5f7f97',  // slate-blue  — muted / section labels
+                    600: '#8dafc8',  // light blue  — dividers, inactive borders
+                    700: '#c8daea',  // pale blue   — subtle hover backgrounds
+                    800: '#e3edf6',  // near-white  — card backgrounds
+                    900: '#f2f7fc',  // off-white   — section backgrounds
+                    950: '#ffffff',  // white        — page bg, nav
                 },
             },
             backgroundImage: {

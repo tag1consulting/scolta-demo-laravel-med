@@ -9,7 +9,7 @@
         scroll-behavior: smooth;
     }
     body {
-        @apply bg-lunar-950 text-lunar-100;
+        @apply bg-lunar-950 text-lunar-200;
     }
     h1, h2, h3, h4, h5, h6 {
         @apply text-lunar-100;
@@ -30,48 +30,38 @@
         @apply text-lunar-400 hover:text-lunar-100 py-1;
     }
 
-    /* Crater-ring decorative element */
-    .crater-ring {
-        @apply relative rounded-full;
-    }
-    .crater-ring::before {
-        content: '';
-        @apply absolute inset-0 rounded-full;
-        box-shadow: inset 0 2px 8px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.06);
-    }
-
     /* Card styles */
     .card {
-        @apply bg-lunar-900 border border-lunar-800 rounded-xl p-6 hover:border-lunar-600 transition-colors;
+        @apply bg-white border border-lunar-700 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-lunar-600 transition-all;
     }
     .card-emergency {
-        @apply bg-red-950/50 border border-red-800 rounded-xl p-6;
+        @apply bg-red-50 border border-red-200 rounded-xl p-6;
     }
 
     /* Badge styles */
     .badge {
         @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
     }
-    .badge-severity-minor    { @apply bg-green-900/50 text-green-300 border border-green-800; }
-    .badge-severity-moderate { @apply bg-yellow-900/50 text-yellow-300 border border-yellow-800; }
-    .badge-severity-severe   { @apply bg-orange-900/50 text-orange-300 border border-orange-800; }
-    .badge-severity-critical { @apply bg-red-900/50 text-red-300 border border-red-800; }
-    .badge-risk-low      { @apply bg-green-900/50 text-green-300 border border-green-800; }
-    .badge-risk-medium   { @apply bg-yellow-900/50 text-yellow-300 border border-yellow-800; }
-    .badge-risk-high     { @apply bg-orange-900/50 text-orange-300 border border-orange-800; }
-    .badge-risk-critical { @apply bg-red-900/50 text-red-300 border border-red-800; }
-    .badge-lunar         { @apply bg-blue-900/50 text-blue-300 border border-blue-800; }
+    .badge-severity-minor    { @apply bg-green-50 text-green-800 border border-green-200; }
+    .badge-severity-moderate { @apply bg-yellow-50 text-yellow-800 border border-yellow-200; }
+    .badge-severity-severe   { @apply bg-orange-50 text-orange-800 border border-orange-200; }
+    .badge-severity-critical { @apply bg-red-50 text-red-800 border border-red-200; }
+    .badge-risk-low      { @apply bg-green-50 text-green-800 border border-green-200; }
+    .badge-risk-medium   { @apply bg-yellow-50 text-yellow-800 border border-yellow-200; }
+    .badge-risk-high     { @apply bg-orange-50 text-orange-800 border border-orange-200; }
+    .badge-risk-critical { @apply bg-red-50 text-red-800 border border-red-200; }
+    .badge-lunar         { @apply bg-blue-50 text-blue-800 border border-blue-200; }
 
     /* Section headers */
     .section-header {
-        @apply text-xs font-semibold tracking-widest uppercase text-lunar-500 mb-3;
+        @apply text-xs font-semibold tracking-widest uppercase text-lunar-400 mb-3;
     }
 
     /* Content prose */
     .lunar-prose {
         @apply text-lunar-200 leading-relaxed;
     }
-    .lunar-prose h2 { @apply text-xl font-semibold text-lunar-100 mt-8 mb-3 pt-6 border-t border-lunar-800; }
+    .lunar-prose h2 { @apply text-xl font-semibold text-lunar-100 mt-8 mb-3 pt-6 border-t border-lunar-700; }
     .lunar-prose h3 { @apply text-base font-semibold text-lunar-200 mt-5 mb-2; }
     .lunar-prose p  { @apply mb-4; }
     .lunar-prose ul { @apply list-disc list-outside ml-5 mb-4 space-y-1; }
@@ -159,10 +149,10 @@
 
     /* Filter pills */
     .filter-pill {
-        @apply px-3 py-1.5 text-xs rounded-full border border-lunar-700 text-lunar-400 hover:border-lunar-500 hover:text-lunar-200 transition-colors cursor-pointer;
+        @apply px-3 py-1.5 text-xs rounded-full border border-lunar-700 text-lunar-300 hover:border-lunar-400 hover:text-lunar-100 transition-colors cursor-pointer;
     }
     .filter-pill.active {
-        @apply border-blue-600 text-blue-300 bg-blue-900/30;
+        @apply border-blue-600 text-blue-700 bg-blue-50;
     }
 
 }

@@ -22,7 +22,7 @@
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                     <div class="relative w-9 h-9 flex-shrink-0">
                         {{-- Moon --}}
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-lunar-300 to-lunar-500 shadow-[0_0_20px_rgba(200,200,220,0.3)] group-hover:shadow-[0_0_30px_rgba(200,200,220,0.5)] transition-shadow"></div>
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-slate-300 to-slate-500 shadow-[0_0_16px_rgba(100,140,180,0.25)] group-hover:shadow-[0_0_24px_rgba(100,140,180,0.45)] transition-shadow"></div>
                         {{-- Earth (tiny blue marble) --}}
                         <div class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border border-lunar-950 shadow-sm"></div>
                     </div>
@@ -61,7 +61,7 @@
 
     {{-- Emergency Banner (shown on emergency pages) --}}
     @hasSection('emergency')
-    <div class="bg-red-900/80 border-b border-red-700 text-red-100 px-4 py-2 text-sm text-center">
+    <div class="bg-red-600 border-b border-red-700 text-white px-4 py-2 text-sm text-center">
         <span class="font-bold">⚠ EMERGENCY PROTOCOL</span> — Contact Earth Telemedicine (+1.3s delay) and begin evacuation assessment immediately.
     </div>
     @endif
@@ -106,7 +106,7 @@
             </div>
             <div class="mt-8 pt-8 border-t border-lunar-800 text-xs text-lunar-600 flex flex-col sm:flex-row justify-between gap-4">
                 <p>Medical On The Moon — Lunar Medical Reference. All medical information is for educational purposes only. In a medical emergency, contact Earth Telemedicine immediately.</p>
-                <p class="whitespace-nowrap">Search powered by <span class="text-lunar-400">Scolta</span></p>
+                <p class="whitespace-nowrap">Search powered by <span class="text-lunar-300">Scolta</span></p>
             </div>
         </div>
     </footer>

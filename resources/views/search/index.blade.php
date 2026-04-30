@@ -10,10 +10,10 @@
     <p class="text-lunar-400 text-sm mb-8">Powered by <strong class="text-lunar-300">Scolta</strong> — AI query expansion and re-ranking for lunar medical content.</p>
 
     {{-- Scolta search widget (contains the only search bar) --}}
-    <div class="bg-lunar-900 border border-lunar-700 rounded-xl p-6 mb-6">
+    <div class="bg-[#141420] border border-[#2c2c44] rounded-xl p-6 mb-6">
         <div class="flex items-center gap-3 mb-4">
             <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
-            <span class="text-xs text-lunar-400 font-medium tracking-wider uppercase">Scolta AI Search</span>
+            <span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Scolta AI Search</span>
         </div>
         <x-scolta::search />
     </div>
@@ -30,16 +30,16 @@
         <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             @foreach($showcaseQueries as $q => $expansion)
             <a href="{{ route('search') }}?q={{ urlencode($q) }}"
-               class="bg-lunar-900/60 border border-lunar-800 hover:border-blue-700/50 rounded-lg p-4 group/card transition-colors {{ $query === $q ? 'border-blue-600 bg-blue-950/30' : '' }}">
+               class="bg-white border border-lunar-700 hover:border-blue-400 rounded-lg p-4 group/card transition-all shadow-sm hover:shadow {{ $query === $q ? 'border-blue-500 bg-blue-50' : '' }}">
                 <div class="font-medium text-sm text-lunar-200 group-hover/card:text-lunar-100 mb-1">"{{ $q }}"</div>
-                <div class="text-xs text-lunar-500">→ {{ $expansion }}</div>
+                <div class="text-xs text-lunar-400">→ {{ $expansion }}</div>
             </a>
             @endforeach
         </div>
     </details>
 
     {{-- How Scolta works explainer --}}
-    <div class="bg-lunar-900/40 border border-lunar-800 rounded-xl p-6">
+    <div class="bg-lunar-900 border border-lunar-700 rounded-xl p-6">
         <h2 class="text-sm font-semibold text-lunar-200 mb-4">How Scolta Search Works</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-lunar-400">
             <div>
