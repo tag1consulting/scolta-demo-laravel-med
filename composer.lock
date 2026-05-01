@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8090c2a8762f971212c2e9aa5e7b69c3",
+    "content-hash": "d9ef299e80f8db9ca579d620ce02b64f",
     "packages": [
         {
             "name": "brick/math",
@@ -5851,16 +5851,16 @@
         },
         {
             "name": "tag1/scolta-laravel",
-            "version": "0.3.7",
+            "version": "0.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tag1consulting/scolta-laravel.git",
-                "reference": "a068342beea728501fbf2c488b023d92622c40df"
+                "reference": "7f9e0582b6f370a96930d359f9b490782bfe79dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tag1consulting/scolta-laravel/zipball/a068342beea728501fbf2c488b023d92622c40df",
-                "reference": "a068342beea728501fbf2c488b023d92622c40df",
+                "url": "https://api.github.com/repos/tag1consulting/scolta-laravel/zipball/7f9e0582b6f370a96930d359f9b490782bfe79dd",
+                "reference": "7f9e0582b6f370a96930d359f9b490782bfe79dd",
                 "shasum": ""
             },
             "require": {
@@ -5919,10 +5919,10 @@
             ],
             "description": "Scolta AI Search for Laravel — zero-infrastructure AI-powered search with Pagefind",
             "support": {
-                "source": "https://github.com/tag1consulting/scolta-laravel/tree/v0.3.7",
+                "source": "https://github.com/tag1consulting/scolta-laravel/tree/v0.3.8",
                 "issues": "https://github.com/tag1consulting/scolta-laravel/issues"
             },
-            "time": "2026-04-30T07:56:06+00:00"
+            "time": "2026-05-01T07:57:17+00:00"
         },
         {
             "name": "tag1/scolta-php",
