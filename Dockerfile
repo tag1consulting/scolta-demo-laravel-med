@@ -167,6 +167,7 @@ COPY --from=composer /app .
 COPY --from=npm-build /app/public/build ./public/build
 
 RUN mkdir -p /app/storage/framework/views && \
+    mkdir -p /app/storage/framework/sessions && \
     chown -R 1001:0 /app/storage /app/bootstrap/cache && \
     chmod -R g+rwX /app/storage /app/bootstrap/cache
 
