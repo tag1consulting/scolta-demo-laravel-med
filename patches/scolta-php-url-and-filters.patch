@@ -8,7 +8,7 @@ index 863c47d..067b096 100644
              $item->language,
 +            $item->filters,
          );
- 
+
          $exportPath = "{$this->outputDir}/{$item->id}.html";
 diff --git a/src/Export/ContentItem.php b/src/Export/ContentItem.php
 index 159ff30..2f1306c 100644
@@ -69,9 +69,9 @@ index 1969728..a344266 100644
          $escapedTitle = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
          $escapedBody = htmlspecialchars($body, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 @@ -42,6 +43,13 @@ class PagefindHtmlBuilder
- 
+
          $langFilter = sprintf('<span data-pagefind-filter="language:%s" hidden></span>' . "\n", $escapedLang);
- 
+
 +        $extraFilters = '';
 +        foreach ($filters as $key => $value) {
 +            $escapedKey = htmlspecialchars((string) $key, ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -136,22 +136,27 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
        const useFullContent = i < 2;
        const text = useFullContent
          ? stripHtml(r.data.content || r.data.excerpt || "")
-@@ -845,16 +845,20 @@
-       continue;
-     }
+@@ -840,21 +840,25 @@
+       const base = title.split('|')[0].trim();
+       const words = new Set(base.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2));
+
+       if (words.size === 0) {
++        console.log('[scolta:dedup] zero-word item — hasMeta:', !!r.data?.meta, 'title:', r.data?.meta?.title, 'url:', r.data?.meta?.url || r.data?.url);
+         kept.push(r);
+         continue;
+       }
 
 -      // Check against all kept titles for high overlap (Jaccard >= 0.7)
-+      // Check against all kept titles for high overlap (Jaccard >= 0.7)
-+      // or subset relationship: all words of the shorter title appear in the longer
-+      // (catches "Post-EVA Low-G Stress Fracture" vs "Low-G Stress Fracture" etc.)
++      // Check against all kept titles for high overlap (Jaccard >= 0.6)
++      // or predominant overlap (>=3 shared words AND intersection/min >= 0.6)
        let isDuplicate = false;
        for (const seen of seenTitles) {
          const intersection = [...words].filter(w => seen.words.has(w)).length;
          const union = new Set([...words, ...seen.words]).size;
 -        if (union > 0 && intersection / union >= 0.7) {
 +        const smaller = Math.min(words.size, seen.words.size);
-+        if ((union > 0 && intersection / union >= 0.7) ||
-+            (intersection >= 2 && intersection === smaller)) {
++        if ((union > 0 && intersection / union >= 0.6) ||
++            (intersection >= 3 && intersection / smaller >= 0.6)) {
            isDuplicate = true;
            break;
          }
@@ -159,4 +164,48 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
 
        if (!isDuplicate) {
          seenTitles.push({ words });
-
+@@ -895,17 +899,33 @@
+       });
+       try {
+         const output = scoltaWasm.merge_results(input);
+         const merged = JSON.parse(output);
+-        const dataByUrl = new Map();
+-        for (const r of [...currentResults, ...newResults]) {
+-          const url = r.data.meta?.url || r.data.url || '';
+-          if (!dataByUrl.has(url) || r.score > dataByUrl.get(url).score) {
+-            dataByUrl.set(url, r);
+-          }
+-        }
+-        return merged.map(item => ({
+-          data: dataByUrl.get(item.url)?.data || item,
+-          score: item.score,
+-        }));
++        // Normalize URLs on both sides so WASM's strip-of-.html or trailing-slash
++        // normalization doesn't cause lookup misses that lose meta.title.
++        const normalizeUrl = u => (u || '').replace(/\.html$/, '').replace(/\/$/, '').toLowerCase();
++        const dataByUrl = new Map();
++        for (const r of [...currentResults, ...newResults]) {
++          const rawUrl = r.data.meta?.url || r.data.url || '';
++          // Index by multiple forms to survive whatever normalization WASM applies
++          for (const key of [rawUrl, normalizeUrl(rawUrl), rawUrl.replace(/^\/+/, ''), normalizeUrl(rawUrl).replace(/^\/+/, '')]) {
++            if (key && (!dataByUrl.has(key) || r.score > dataByUrl.get(key).score)) {
++              dataByUrl.set(key, r);
++            }
++          }
++        }
++        let lookupMisses = 0;
++        const resolvedMerged = merged.map(item => {
++          const iUrl = item.url || '';
++          const found = dataByUrl.get(iUrl)
++            || dataByUrl.get(normalizeUrl(iUrl))
++            || dataByUrl.get(iUrl.replace(/^\/+/, ''))
++            || dataByUrl.get(normalizeUrl(iUrl).replace(/^\/+/, ''));
++          if (!found) lookupMisses++;
++          return { data: found?.data || item, score: item.score };
++        });
++        if (lookupMisses > 0) {
++          console.warn('[scolta:merge] WASM URL lookup missed', lookupMisses, '/', merged.length, 'items. Sample WASM url:', merged[0]?.url, '| Sample dataByUrl key:', [...dataByUrl.keys()][0]);
++        }
++        return resolvedMerged;
+       } catch (e) {
+         console.warn("[scolta] WASM merge_results failed, using fallback:", e.message);

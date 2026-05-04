@@ -841,6 +841,7 @@
       const words = new Set(base.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2));
 
       if (words.size === 0) {
+        console.log('[scolta:dedup] zero-word item — hasMeta:', !!r.data?.meta, 'title:', r.data?.meta?.title, 'url:', r.data?.meta?.url || r.data?.url);
         kept.push(r);
         continue;
       }
@@ -853,8 +854,8 @@
         const intersection = [...words].filter(w => seen.words.has(w)).length;
         const union = new Set([...words, ...seen.words]).size;
         const smaller = Math.min(words.size, seen.words.size);
-        if ((union > 0 && intersection / union >= 0.7) ||
-            (intersection >= 2 && intersection === smaller)) {
+        if ((union > 0 && intersection / union >= 0.6) ||
+            (intersection >= 3 && intersection / smaller >= 0.6)) {
           isDuplicate = true;
           break;
         }
@@ -907,15 +908,28 @@
         const normalizeUrl = u => (u || '').replace(/\.html$/, '').replace(/\/$/, '').toLowerCase();
         const dataByUrl = new Map();
         for (const r of [...currentResults, ...newResults]) {
-          const url = normalizeUrl(r.data.meta?.url || r.data.url || '');
-          if (!dataByUrl.has(url) || r.score > dataByUrl.get(url).score) {
-            dataByUrl.set(url, r);
+          const rawUrl = r.data.meta?.url || r.data.url || '';
+          // Index by multiple forms to survive whatever normalization WASM applies
+          for (const key of [rawUrl, normalizeUrl(rawUrl), rawUrl.replace(/^\/+/, ''), normalizeUrl(rawUrl).replace(/^\/+/, '')]) {
+            if (key && (!dataByUrl.has(key) || r.score > dataByUrl.get(key).score)) {
+              dataByUrl.set(key, r);
+            }
           }
         }
-        return merged.map(item => {
-          const found = dataByUrl.get(normalizeUrl(item.url));
+        let lookupMisses = 0;
+        const resolvedMerged = merged.map(item => {
+          const iUrl = item.url || '';
+          const found = dataByUrl.get(iUrl)
+            || dataByUrl.get(normalizeUrl(iUrl))
+            || dataByUrl.get(iUrl.replace(/^\/+/, ''))
+            || dataByUrl.get(normalizeUrl(iUrl).replace(/^\/+/, ''));
+          if (!found) lookupMisses++;
           return { data: found?.data || item, score: item.score };
         });
+        if (lookupMisses > 0) {
+          console.warn('[scolta:merge] WASM URL lookup missed', lookupMisses, '/', merged.length, 'items. Sample WASM url:', merged[0]?.url, '| Sample dataByUrl key:', [...dataByUrl.keys()][0]);
+        }
+        return resolvedMerged;
       } catch (e) {
         console.warn("[scolta] WASM merge_results failed, using fallback:", e.message);
       }
