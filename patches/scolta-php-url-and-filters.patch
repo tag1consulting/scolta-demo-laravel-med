@@ -1,121 +1,3 @@
-diff --git a/src/Export/ContentExporter.php b/src/Export/ContentExporter.php
-index 863c47d..067b096 100644
---- a/src/Export/ContentExporter.php
-+++ b/src/Export/ContentExporter.php
-@@ -81,6 +81,7 @@ class ContentExporter
-             $item->date,
-             $item->siteName,
-             $item->language,
-+            $item->filters,
-         );
-
-         $exportPath = "{$this->outputDir}/{$item->id}.html";
-diff --git a/src/Export/ContentItem.php b/src/Export/ContentItem.php
-index 159ff30..2f1306c 100644
---- a/src/Export/ContentItem.php
-+++ b/src/Export/ContentItem.php
-@@ -13,6 +13,9 @@ namespace Tag1\Scolta\Export;
-  */
- class ContentItem
- {
-+    /** Canonical URL — always stored as a relative path. */
-+    public readonly string $url;
-+
-     public function __construct(
-         /** Unique identifier (entity ID, post ID, etc.). Used as filename. */
-         public readonly string $id,
-@@ -20,14 +23,29 @@ class ContentItem
-         public readonly string $title,
-         /** Raw HTML body content. May include page chrome that needs stripping. */
-         public readonly string $bodyHtml,
--        /** Canonical URL for this content. */
--        public readonly string $url,
-+        /** Absolute or relative URL. Absolute URLs are stripped to a path so the
-+         *  pagefind index is portable across environments (DDEV → production). */
-+        string $url,
-         /** Last-modified date in Y-m-d format. */
-         public readonly string $date,
-         /** Site name for Pagefind filtering/faceting. */
-         public readonly string $siteName = '',
-         /** Language code for multi-language Pagefind filtering. */
-         public readonly string $language = 'en',
-+        /** Extra Pagefind filter attributes keyed by filter name.
-+         *  e.g. ['base_topic' => 'Cardiology']. Values pass directly into
-+         *  data-pagefind-filter — they bypass HtmlCleaner so HTML is not stripped. */
-+        public readonly array $filters = [],
-     ) {
-+        // Strip scheme and host so the baked-in URL works on any domain.
-+        // An index built on DDEV (https://myapp.ddev.site/path) must serve
-+        // correct links on production (https://myapp.example.com/path).
-+        if (str_contains($url, '://')) {
-+            $parsed = parse_url($url);
-+            $url = ($parsed['path'] ?? '/')
-+                . (isset($parsed['query']) ? '?' . $parsed['query'] : '')
-+                . (isset($parsed['fragment']) ? '#' . $parsed['fragment'] : '');
-+        }
-+        $this->url = $url;
-     }
- }
-diff --git a/src/Html/PagefindHtmlBuilder.php b/src/Html/PagefindHtmlBuilder.php
-index 1969728..a344266 100644
---- a/src/Html/PagefindHtmlBuilder.php
-+++ b/src/Html/PagefindHtmlBuilder.php
-@@ -22,6 +22,7 @@ class PagefindHtmlBuilder
-         string $date = '',
-         string $siteName = '',
-         string $language = 'en',
-+        array $filters = [],
-     ): string {
-         $escapedTitle = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-         $escapedBody = htmlspecialchars($body, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-@@ -42,6 +43,13 @@ class PagefindHtmlBuilder
-
-         $langFilter = sprintf('<span data-pagefind-filter="language:%s" hidden></span>' . "\n", $escapedLang);
-
-+        $extraFilters = '';
-+        foreach ($filters as $key => $value) {
-+            $escapedKey = htmlspecialchars((string) $key, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-+            $escapedValue = htmlspecialchars((string) $value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-+            $extraFilters .= sprintf('<span data-pagefind-filter="%s:%s" hidden></span>' . "\n", $escapedKey, $escapedValue);
-+        }
-+
-         return sprintf(
-             '<!DOCTYPE html>
- <html lang="%s">
-@@ -52,7 +60,7 @@ class PagefindHtmlBuilder
- <body data-pagefind-body id="%s"%s>
- <h1>%s</h1>
- <p data-pagefind-meta="url:%s" hidden></p>
--%s%s%s
-+%s%s%s%s
- </body>
- </html>',
-             $escapedLang,
-@@ -63,6 +71,7 @@ class PagefindHtmlBuilder
-             $escapedUrl,
-             $dateMeta,
-             $langFilter,
-+            $extraFilters,
-             $escapedBody
-         );
-     }
-diff --git a/src/Index/InvertedIndexBuilder.php b/src/Index/InvertedIndexBuilder.php
-index 24f0f66..f5f2ef1 100644
---- a/src/Index/InvertedIndexBuilder.php
-+++ b/src/Index/InvertedIndexBuilder.php
-@@ -98,7 +98,10 @@ class InvertedIndexBuilder
-                 'content' => $content,
-                 'wordCount' => $wordCount,
-                 'date' => $item->date,
--                'filters' => $item->siteName !== '' ? ['site' => $item->siteName] : [],
-+                'filters' => array_merge(
-+                    $item->siteName !== '' ? ['site' => $item->siteName] : [],
-+                    $item->filters,
-+                ),
-                 'meta' => array_filter([
-                     'title' => $cleanTitle,
-                     'date' => $item->date,
-
 diff --git a/assets/js/scolta.js b/assets/js/scolta.js
 --- a/assets/js/scolta.js
 +++ b/assets/js/scolta.js
@@ -129,6 +11,7 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
          }));
          const extractInput = JSON.stringify({
 @@ -502,7 +502,7 @@
+     const CONFIG = getInstanceConfig();
      return results.map((r, i) => {
        const title = r.data.meta?.title || "Untitled";
 -      const url = r.data.meta?.url || "";
@@ -136,16 +19,7 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
        const useFullContent = i < 2;
        const text = useFullContent
          ? stripHtml(r.data.content || r.data.excerpt || "")
-@@ -840,21 +840,25 @@
-       const base = title.split('|')[0].trim();
-       const words = new Set(base.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2));
-
-       if (words.size === 0) {
-+        console.log('[scolta:dedup] zero-word item — hasMeta:', !!r.data?.meta, 'title:', r.data?.meta?.title, 'url:', r.data?.meta?.url || r.data?.url);
-         kept.push(r);
-         continue;
-       }
-
+@@ -848,10 +848,13 @@
 -      // Check against all kept titles for high overlap (Jaccard >= 0.7)
 +      // Check against all kept titles for high overlap (Jaccard >= 0.6)
 +      // or predominant overlap (>=3 shared words AND intersection/min >= 0.6)
@@ -161,10 +35,7 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
            break;
          }
        }
-
-       if (!isDuplicate) {
-         seenTitles.push({ words });
-@@ -895,17 +899,33 @@
+@@ -895,17 +898,30 @@
        });
        try {
          const output = scoltaWasm.merge_results(input);
@@ -180,13 +51,10 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
 -          data: dataByUrl.get(item.url)?.data || item,
 -          score: item.score,
 -        }));
-+        // Normalize URLs on both sides so WASM's strip-of-.html or trailing-slash
-+        // normalization doesn't cause lookup misses that lose meta.title.
 +        const normalizeUrl = u => (u || '').replace(/\.html$/, '').replace(/\/$/, '').toLowerCase();
 +        const dataByUrl = new Map();
 +        for (const r of [...currentResults, ...newResults]) {
 +          const rawUrl = r.data.meta?.url || r.data.url || '';
-+          // Index by multiple forms to survive whatever normalization WASM applies
 +          for (const key of [rawUrl, normalizeUrl(rawUrl), rawUrl.replace(/^\/+/, ''), normalizeUrl(rawUrl).replace(/^\/+/, '')]) {
 +            if (key && (!dataByUrl.has(key) || r.score > dataByUrl.get(key).score)) {
 +              dataByUrl.set(key, r);
@@ -204,7 +72,7 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
 +          return { data: found?.data || item, score: item.score };
 +        });
 +        if (lookupMisses > 0) {
-+          console.warn('[scolta:merge] WASM URL lookup missed', lookupMisses, '/', merged.length, 'items. Sample WASM url:', merged[0]?.url, '| Sample dataByUrl key:', [...dataByUrl.keys()][0]);
++          console.warn('[scolta:merge] WASM URL lookup missed', lookupMisses, '/', merged.length);
 +        }
 +        return resolvedMerged;
        } catch (e) {
