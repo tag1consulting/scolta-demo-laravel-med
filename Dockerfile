@@ -85,7 +85,7 @@ ENV HTTPD_MIN_SPARE_SERVERS=5
 ENV HTTPD_MAX_SPARE_SERVERS=10
 ENV HTTPD_MAX_REQUEST_WORKERS=50
 ENV HTTPD_MAX_CONNECTIONS_PER_CHILD=2000
-WORKDIR /app
+WORKDIR /var/www/html
 
 RUN apt-get update && \
     apt-get install -y \
@@ -120,8 +120,8 @@ RUN { \
 
 RUN { \
     echo '<VirtualHost *:8080>'; \
-    echo 'DocumentRoot /app/public'; \
-    echo '<Directory /app/public>'; \
+    echo 'DocumentRoot /var/www/html/public'; \
+    echo '<Directory /var/www/html/public>'; \
     echo '    Options FollowSymLinks'; \
     echo '    AllowOverride All'; \
     echo '    Require all granted'; \
@@ -166,10 +166,10 @@ COPY --from=composer /app .
 # Copy compiled frontend assets from Vite build
 COPY --from=npm-build /app/public/build ./public/build
 
-RUN mkdir -p /app/storage/framework/views && \
-    mkdir -p /app/storage/framework/sessions && \
-    chown -R 1001:0 /app/storage /app/bootstrap/cache && \
-    chmod -R g+rwX /app/storage /app/bootstrap/cache
+RUN mkdir -p /var/www/html/storage/framework/views && \
+    mkdir -p /var/www/html/storage/framework/sessions && \
+    chown -R 1001:0 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R g+rwX /var/www/html/storage /var/www/html/bootstrap/cache
 
 USER 1001
 
