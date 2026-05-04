@@ -846,11 +846,15 @@
       }
 
       // Check against all kept titles for high overlap (Jaccard >= 0.7)
+      // or subset relationship: all words of the shorter title appear in the longer
+      // (catches "Post-EVA Low-G Stress Fracture" vs "Low-G Stress Fracture" etc.)
       let isDuplicate = false;
       for (const seen of seenTitles) {
         const intersection = [...words].filter(w => seen.words.has(w)).length;
         const union = new Set([...words, ...seen.words]).size;
-        if (union > 0 && intersection / union >= 0.7) {
+        const smaller = Math.min(words.size, seen.words.size);
+        if ((union > 0 && intersection / union >= 0.7) ||
+            (intersection >= 2 && intersection === smaller)) {
           isDuplicate = true;
           break;
         }

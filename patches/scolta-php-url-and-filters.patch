@@ -136,4 +136,27 @@ diff --git a/assets/js/scolta.js b/assets/js/scolta.js
        const useFullContent = i < 2;
        const text = useFullContent
          ? stripHtml(r.data.content || r.data.excerpt || "")
+@@ -845,16 +845,20 @@
+       continue;
+     }
+
+-      // Check against all kept titles for high overlap (Jaccard >= 0.7)
++      // Check against all kept titles for high overlap (Jaccard >= 0.7)
++      // or subset relationship: all words of the shorter title appear in the longer
++      // (catches "Post-EVA Low-G Stress Fracture" vs "Low-G Stress Fracture" etc.)
+       let isDuplicate = false;
+       for (const seen of seenTitles) {
+         const intersection = [...words].filter(w => seen.words.has(w)).length;
+         const union = new Set([...words, ...seen.words]).size;
+-        if (union > 0 && intersection / union >= 0.7) {
++        const smaller = Math.min(words.size, seen.words.size);
++        if ((union > 0 && intersection / union >= 0.7) ||
++            (intersection >= 2 && intersection === smaller)) {
+           isDuplicate = true;
+           break;
+         }
+       }
+
+       if (!isDuplicate) {
+         seenTitles.push({ words });
 
