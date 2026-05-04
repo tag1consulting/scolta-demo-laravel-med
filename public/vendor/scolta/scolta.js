@@ -863,6 +863,8 @@
       if (!isDuplicate) {
         seenTitles.push({ words });
         kept.push(r);
+      } else {
+        console.log(`[scolta:dedup] Suppressed variant: "${r.data.meta?.title}"`);
       }
     }
 
