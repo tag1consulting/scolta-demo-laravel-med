@@ -48,8 +48,8 @@
         {{-- Lunar risk factors --}}
         @if($condition->lunar_risk_factors)
         <h2>Lunar Risk Factors</h2>
-        <div class="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-6">
-            <p class="text-amber-900">{{ $condition->lunar_risk_factors }}</p>
+        <div class="border-l-4 border-amber-500 bg-amber-50 rounded-lg p-5 mb-6">
+            <p class="text-amber-900 text-sm">{{ $condition->lunar_risk_factors }}</p>
         </div>
         @endif
 
@@ -57,8 +57,8 @@
         <h2>Symptoms</h2>
         <p>{{ $condition->symptoms }}</p>
         @if($condition->lunar_symptoms)
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-3">
-            <p class="text-xs text-blue-600 font-semibold mb-1 tracking-wider uppercase">Lunar Presentation</p>
+        <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4 mt-3">
+            <p class="text-xs text-blue-700 font-semibold mb-1 tracking-wider uppercase">Lunar Presentation</p>
             <p class="text-slate-700 text-sm">{{ $condition->lunar_symptoms }}</p>
         </div>
         @endif
@@ -71,8 +71,8 @@
         <h2>Treatment</h2>
         <p>{{ $condition->treatment }}</p>
         @if($condition->treatment_lunar)
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-3">
-            <p class="text-xs text-blue-600 font-semibold mb-1 tracking-wider uppercase">Lunar Medical Bay Protocol</p>
+        <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4 mt-3">
+            <p class="text-xs text-blue-700 font-semibold mb-1 tracking-wider uppercase">Lunar Medical Bay Protocol</p>
             <p class="text-slate-700 text-sm">{{ $condition->treatment_lunar }}</p>
         </div>
         @endif
@@ -80,8 +80,8 @@
         {{-- Evacuation --}}
         @if($condition->evacuation_criteria)
         <h2 class="text-red-700">Evacuation Criteria</h2>
-        <div class="card-emergency rounded-lg p-5">
-            <p class="text-red-700">{{ $condition->evacuation_criteria }}</p>
+        <div class="border-l-4 border-red-500 bg-red-50 rounded-lg p-5">
+            <p class="text-red-800 text-sm">{{ $condition->evacuation_criteria }}</p>
         </div>
         @endif
 

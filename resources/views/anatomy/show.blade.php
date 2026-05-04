@@ -41,14 +41,14 @@
             </div>
             @endif
             @if($anatomy->lunar_adaptation_6m)
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-5">
-                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">6-Month Resident</p>
+            <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-5">
+                <p class="text-xs text-blue-700 font-semibold mb-2 tracking-wider uppercase">6-Month Resident</p>
                 <p class="text-sm text-slate-700">{{ $anatomy->lunar_adaptation_6m }}</p>
             </div>
             @endif
             @if($anatomy->lunar_adaptation_2y)
-            <div class="bg-purple-50 border border-purple-200 rounded-lg p-5">
-                <p class="text-xs text-purple-600 font-semibold mb-2 tracking-wider uppercase">Long-Term Resident (2+ Years)</p>
+            <div class="border-l-4 border-purple-500 bg-purple-50 rounded-lg p-5">
+                <p class="text-xs text-purple-700 font-semibold mb-2 tracking-wider uppercase">Long-Term Resident (2+ Years)</p>
                 <p class="text-sm text-slate-700">{{ $anatomy->lunar_adaptation_2y }}</p>
             </div>
             @endif

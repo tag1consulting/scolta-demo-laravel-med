@@ -4,10 +4,16 @@
 @section('description', 'AI-powered lunar medical search with Scolta query expansion and re-ranking.')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <h1 class="text-3xl font-bold text-lunar-100 mb-2">Lunar Medical Search</h1>
-    <p class="text-lunar-400 text-sm mb-8">Powered by <strong class="text-lunar-300">Scolta</strong> — AI query expansion and re-ranking for lunar medical content.</p>
+{{-- Dark page header — visual bridge from the home hero --}}
+<div class="bg-[#0e2040] border-b border-[#1b3860]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <h1 class="text-3xl font-bold text-white mb-2">Lunar Medical Search</h1>
+        <p class="text-blue-200/70 text-sm">Powered by <strong class="text-blue-200">Scolta</strong> — AI query expansion and re-ranking for lunar medical content.</p>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     {{-- Scolta search widget --}}
     <div class="bg-white border border-lunar-700 rounded-xl p-6 mb-6 shadow-sm">

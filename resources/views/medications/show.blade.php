@@ -41,8 +41,8 @@
                 <p class="text-sm text-lunar-200">{{ $medication->dosing_standard }}</p>
             </div>
             @if($medication->dosing_lunar)
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar Protocol</p>
+            <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4">
+                <p class="text-xs text-blue-700 font-semibold mb-2 tracking-wider uppercase">Lunar Protocol</p>
                 <p class="text-sm text-slate-700">{{ $medication->dosing_lunar }}</p>
             </div>
             @endif
@@ -58,8 +58,8 @@
             </div>
             @endif
             @if($medication->storage_lunar)
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar (Radiation + Temperature)</p>
+            <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4">
+                <p class="text-xs text-blue-700 font-semibold mb-2 tracking-wider uppercase">Lunar (Radiation + Temperature)</p>
                 <p class="text-sm text-slate-700">{{ $medication->storage_lunar }}</p>
             </div>
             @endif
