@@ -51,18 +51,15 @@ class Article extends Model
         // prefix is the canonical topic family. The pagefind filter enables client-side
         // deduplication so search results show at most one article per topic family.
         $baseTopic = trim(explode(':', $this->title, 2)[0]);
-        $baseTopicFilter = sprintf(
-            '<span data-pagefind-filter="base_topic:%s" hidden></span>',
-            htmlspecialchars($baseTopic, ENT_QUOTES, 'UTF-8'),
-        );
 
         return new ContentItem(
             id: "article-{$this->id}",
             title: $this->title,
-            bodyHtml: nl2br(e($this->abstract."\n\n".$this->content)) . $baseTopicFilter,
+            bodyHtml: nl2br(e($this->abstract."\n\n".$this->content)),
             url: route('articles.show', $this->slug),
             date: ($this->published_date ?? $this->updated_at)->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
+            filters: ['base_topic' => $baseTopic],
         );
     }
 }
