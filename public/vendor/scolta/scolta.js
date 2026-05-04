@@ -902,17 +902,20 @@
       try {
         const output = scoltaWasm.merge_results(input);
         const merged = JSON.parse(output);
+        // Normalize URLs on both sides so WASM's strip-of-.html or trailing-slash
+        // normalization doesn't cause lookup misses that lose meta.title.
+        const normalizeUrl = u => (u || '').replace(/\.html$/, '').replace(/\/$/, '').toLowerCase();
         const dataByUrl = new Map();
         for (const r of [...currentResults, ...newResults]) {
-          const url = r.data.meta?.url || r.data.url || '';
+          const url = normalizeUrl(r.data.meta?.url || r.data.url || '');
           if (!dataByUrl.has(url) || r.score > dataByUrl.get(url).score) {
             dataByUrl.set(url, r);
           }
         }
-        return merged.map(item => ({
-          data: dataByUrl.get(item.url)?.data || item,
-          score: item.score,
-        }));
+        return merged.map(item => {
+          const found = dataByUrl.get(normalizeUrl(item.url));
+          return { data: found?.data || item, score: item.score };
+        });
       } catch (e) {
         console.warn("[scolta] WASM merge_results failed, using fallback:", e.message);
       }
