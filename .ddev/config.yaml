@@ -7,6 +7,8 @@ database:
 webserver_type: nginx-fpm
 docroot: public
 nodejs_version: "22"
+web_environment:
+  - SCOLTA_PRESET=reference
 hooks:
   post-start:
     - exec: composer install --no-interaction --prefer-dist 2>&1 | tail -5
