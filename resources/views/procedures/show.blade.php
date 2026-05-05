@@ -45,8 +45,8 @@
                 <p class="text-sm text-lunar-200">{{ $procedure->equipment_standard }}</p>
             </div>
             @if($procedure->equipment_lunar)
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar Medical Bay Substitutions</p>
+            <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4">
+                <p class="text-xs text-blue-700 font-semibold mb-2 tracking-wider uppercase">Lunar Medical Bay Substitutions</p>
                 <p class="text-sm text-slate-700">{{ $procedure->equipment_lunar }}</p>
             </div>
             @endif
@@ -56,8 +56,8 @@
         <p>{{ $procedure->steps }}</p>
 
         @if($procedure->steps_lunar)
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 mt-4">
-            <p class="text-xs text-blue-600 font-semibold mb-2 tracking-wider uppercase">Lunar Technique Modifications (1/6 Gravity)</p>
+        <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-5 mt-4">
+            <p class="text-xs text-blue-700 font-semibold mb-2 tracking-wider uppercase">Lunar Technique Modifications (1/6 Gravity)</p>
             <p class="text-sm text-slate-700">{{ $procedure->steps_lunar }}</p>
         </div>
         @endif

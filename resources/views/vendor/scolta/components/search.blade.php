@@ -75,7 +75,7 @@
 
     {{-- Scolta JS from published assets --}}
     @if(file_exists(public_path('vendor/scolta/scolta.js')))
-        <script src="{{ asset('vendor/scolta/scolta.js') }}" defer></script>
+        <script src="{{ asset('vendor/scolta/scolta.js') }}?v={{ filemtime(public_path('vendor/scolta/scolta.js')) }}" defer></script>
     @else
         <!-- Scolta JS not published. Run: php artisan vendor:publish --tag=scolta-assets -->
     @endif
