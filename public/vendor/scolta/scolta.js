@@ -25,7 +25,7 @@
  *   - Title match boost: word-boundary matching, all-terms multiplier
  *   - Content match boost: word-boundary matching against excerpt
  *   - Expanded-term weight decay: 0.7 → 0.65 → 0.60 → ... min 0.4
- *   - Jaccard deduplication: 0.7 threshold on title word overlap
+ *   - Jaccard deduplication: 0.6 threshold on title word overlap
  *   - OR fallback: if AND search returns <5 results, search each term individually
  *   - Parallel data loading: all .data() calls across all searches in one Promise.all()
  *   - Dual scoring: expanded results scored vs source term AND original query, higher wins
@@ -525,7 +525,12 @@
         if (inList) { html += '</ul>'; inList = false; }
         continue;
       }
-      if (trimmed.startsWith('- ')) {
+      const headingMatch = trimmed.match(/^(#{1,3}) (.+)/);
+      if (headingMatch) {
+        if (inList) { html += '</ul>'; inList = false; }
+        const tag = `h${headingMatch[1].length + 2}`;
+        html += `<${tag}>${formatInline(headingMatch[2])}</${tag}>`;
+      } else if (trimmed.startsWith('- ')) {
         if (!inList) { html += '<ul>'; inList = true; }
         html += `<li>${formatInline(trimmed.substring(2))}</li>`;
       } else {
@@ -841,14 +846,12 @@
       const words = new Set(base.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2));
 
       if (words.size === 0) {
-        console.log('[scolta:dedup] zero-word item — hasMeta:', !!r.data?.meta, 'title:', r.data?.meta?.title, 'url:', r.data?.meta?.url || r.data?.url);
         kept.push(r);
         continue;
       }
 
-      // Check against all kept titles for high overlap (Jaccard >= 0.7)
-      // or subset relationship: all words of the shorter title appear in the longer
-      // (catches "Post-EVA Low-G Stress Fracture" vs "Low-G Stress Fracture" etc.)
+      // Check against all kept titles for high overlap (Jaccard >= 0.6)
+      // or predominant overlap (>=3 shared words AND intersection/min >= 0.6)
       let isDuplicate = false;
       for (const seen of seenTitles) {
         const intersection = [...words].filter(w => seen.words.has(w)).length;
@@ -864,8 +867,6 @@
       if (!isDuplicate) {
         seenTitles.push({ words });
         kept.push(r);
-      } else {
-        console.log(`[scolta:dedup] Suppressed variant: "${r.data.meta?.title}"`);
       }
     }
 
@@ -903,13 +904,14 @@
       try {
         const output = scoltaWasm.merge_results(input);
         const merged = JSON.parse(output);
-        // Normalize URLs on both sides so WASM's strip-of-.html or trailing-slash
-        // normalization doesn't cause lookup misses that lose meta.title.
+        // WASM may normalize URLs (strip .html, trailing slash, lowercase) before
+        // deduplication, so its output URLs may not match the raw keys from pagefind.
+        // Build a multi-key map with normalized variants so we can always find the
+        // original result object to attach its full data.
         const normalizeUrl = u => (u || '').replace(/\.html$/, '').replace(/\/$/, '').toLowerCase();
         const dataByUrl = new Map();
         for (const r of [...currentResults, ...newResults]) {
           const rawUrl = r.data.meta?.url || r.data.url || '';
-          // Index by multiple forms to survive whatever normalization WASM applies
           for (const key of [rawUrl, normalizeUrl(rawUrl), rawUrl.replace(/^\/+/, ''), normalizeUrl(rawUrl).replace(/^\/+/, '')]) {
             if (key && (!dataByUrl.has(key) || r.score > dataByUrl.get(key).score)) {
               dataByUrl.set(key, r);
@@ -927,7 +929,7 @@
           return { data: found?.data || item, score: item.score };
         });
         if (lookupMisses > 0) {
-          console.warn('[scolta:merge] WASM URL lookup missed', lookupMisses, '/', merged.length, 'items. Sample WASM url:', merged[0]?.url, '| Sample dataByUrl key:', [...dataByUrl.keys()][0]);
+          console.warn('[scolta:merge] WASM URL lookup missed', lookupMisses, '/', merged.length);
         }
         return resolvedMerged;
       } catch (e) {
@@ -1071,15 +1073,6 @@
 
     renderResults(true);
     console.log(`[scolta:expand] Merged ${allScoredResults.length} results from primary + ${validTerms.length} expanded terms`);
-
-    // Patch: if Phase 1 found no results, summarizeResults was called with an
-    // empty array and returned early.  Now that expansion found results, trigger
-    // the summary.  Guard on display===none so we don't re-summarize when Phase 1
-    // already produced a summary.
-    if (allScoredResults.length > 0 && els.aiSummary.style.display === "none") {
-      const expandedLabel = validTerms.filter(t => t.toLowerCase() !== originalQuery.toLowerCase());
-      summarizeResults(originalQuery, allScoredResults, expandedLabel);
-    }
   }
 
   // --- Main search ---
@@ -1193,23 +1186,23 @@
     renderFilters();
     renderResults();
 
-    // Phase 2: Expanded searches — asynchronous merge
-    expandPromise.then(expandedTerms => {
+    // Phase 2+3: Expand, merge, then summarize with the final reordered results.
+    // Summarize is intentionally deferred until after expansion so the AI sees
+    // the same ranking the user sees (expanded terms promote more relevant results).
+    expandPromise.then(async expandedTerms => {
       if (!preserveFilters) {
         lastExpandedTerms = expandedTerms;
       }
       renderExpandedTerms(expandedTerms, query);
-      mergeExpandedSearchResults(expandedTerms, query, searchQuery, preserveFilters, version);
-    });
+      await mergeExpandedSearchResults(expandedTerms, query, searchQuery, preserveFilters, version);
 
-    // Phase 3: AI summarization
-    const earlyExpandedTerms = lastExpandedTerms && !preserveFilters
-      ? null
-      : lastExpandedTerms;
-    const expandedLabel = earlyExpandedTerms
-      ? earlyExpandedTerms.filter(t => t.toLowerCase() !== query.toLowerCase())
-      : [];
-    summarizeResults(query, allScoredResults, expandedLabel);
+      if (version !== searchVersion) return;
+
+      const expandedLabel = expandedTerms
+        ? expandedTerms.filter(t => t.toLowerCase() !== query.toLowerCase())
+        : [];
+      summarizeResults(query, allScoredResults, expandedLabel);
+    });
   }
 
   function clearSearch() {
