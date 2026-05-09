@@ -12,7 +12,7 @@
 /storage/framework/views
 /storage/app/private
 /storage/app/public
-/storage/scolta/build
+/storage/scolta/
 /vendor
 .env
 .env.backup
