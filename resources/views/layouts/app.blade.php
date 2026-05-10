@@ -101,6 +101,7 @@
                     <h3 class="text-white font-semibold mb-4 text-xs tracking-widest uppercase">Search</h3>
                     <ul class="space-y-2.5 text-slate-300">
                         <li><a href="{{ route('search') }}" class="hover:text-white transition-colors">AI-Powered Search</a></li>
+                        <li><a href="{{ route('about.demo') }}" class="hover:text-white transition-colors">About This Demo</a></li>
                     </ul>
                 </div>
             </div>
