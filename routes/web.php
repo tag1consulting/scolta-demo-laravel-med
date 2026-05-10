@@ -38,3 +38,7 @@ Route::prefix('research')->name('articles.')->group(function () {
     Route::get('/', [ArticleController::class, 'index'])->name('index');
     Route::get('/{slug}', [ArticleController::class, 'show'])->name('show');
 });
+
+Route::get('/about/demo', function () {
+    return view('about');
+})->name('about.demo');
