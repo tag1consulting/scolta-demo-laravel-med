@@ -111,7 +111,7 @@ return [
     |
     */
 
-    'indexer' => env('SCOLTA_INDEXER', 'auto'),
+    'indexer' => env('SCOLTA_INDEXER', 'php'),
 
     /*
     |--------------------------------------------------------------------------
