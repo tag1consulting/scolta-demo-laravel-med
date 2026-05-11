@@ -1,0 +1,11 @@
+{
+    "version": "1.5.0",
+    "languages": {
+        "en": {
+            "hash": "en_8dd578ac14",
+            "wasm": "en",
+            "page_count": 3650
+        }
+    },
+    "include_characters": []
+}
