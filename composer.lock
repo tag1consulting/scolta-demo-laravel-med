@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b7fb914db68a7054c388d538b92f387",
+    "content-hash": "87b848035e3b07f6d4255cbefa1f9df9",
     "packages": [
         {
             "name": "brick/math",
@@ -5859,7 +5859,7 @@
         },
         {
             "name": "tag1/scolta-laravel",
-            "version": "1.0.0-rc1",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tag1consulting/scolta-laravel.git",
@@ -5884,6 +5884,7 @@
                 "orchestra/testbench": "^9.0|^10.0|^11.0",
                 "phpunit/phpunit": "^10.0|^11.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -8746,9 +8747,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "RC",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "tag1/scolta-laravel": 5
+        "tag1/scolta-laravel": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
