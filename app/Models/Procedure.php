@@ -51,6 +51,14 @@ class Procedure extends Model
             $this->training_requirements ? "Training: {$this->training_requirements}" : null,
         ]));
 
+        // Numeric ordinal ensures correct sort order (string sort would give alphabetical — wrong).
+        $riskMap = [
+            'low' => 1,
+            'medium' => 2,
+            'high' => 3,
+            'critical' => 4,
+        ];
+
         return new ContentItem(
             id: "procedure-{$this->id}",
             title: $this->name,
@@ -58,6 +66,9 @@ class Procedure extends Model
             url: route('procedures.show', $this->slug),
             date: $this->updated_at->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
+            sortable: [
+                'risk_level' => $riskMap[$this->risk_level] ?? 2,
+            ],
         );
     }
 }

@@ -84,6 +84,8 @@ return [
         App\Models\Article::class,
     ],
 
+    'sortable_fields' => ['severity', 'risk_level', 'date'],
+
     /*
     |--------------------------------------------------------------------------
     | Pagefind
