@@ -57,6 +57,14 @@ class Condition extends Model
             $this->prevention ? "Prevention: {$this->prevention}" : null,
         ]));
 
+        // Numeric ordinal ensures correct sort order (string sort would give alphabetical — wrong).
+        $severityMap = [
+            'minor' => 1,
+            'moderate' => 2,
+            'severe' => 3,
+            'critical' => 4,
+        ];
+
         return new ContentItem(
             id: "condition-{$this->id}",
             title: $this->lunar_variant_name ?? $this->name,
@@ -64,6 +72,9 @@ class Condition extends Model
             url: route('conditions.show', $this->slug),
             date: $this->updated_at->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
+            sortable: [
+                'severity' => $severityMap[$this->severity] ?? 2,
+            ],
         );
     }
 }
