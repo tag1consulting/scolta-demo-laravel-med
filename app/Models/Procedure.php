@@ -59,11 +59,6 @@ class Procedure extends Model
             'critical' => 4,
         ];
 
-        $filters = ['content_type' => 'Procedure'];
-        if ($this->category) {
-            $filters['procedure_category'] = $this->category;
-        }
-
         return new ContentItem(
             id: "procedure-{$this->id}",
             title: $this->name,
@@ -74,7 +69,9 @@ class Procedure extends Model
             sortable: [
                 'risk_level' => $riskMap[$this->risk_level] ?? 2,
             ],
-            filters: $filters,
+            filters: array_filter([
+                'category' => $this->category ?: 'Procedures',
+            ]),
         );
     }
 }

@@ -46,14 +46,6 @@ class Article extends Model
 
     public function toSearchableContent(): ContentItem
     {
-        $filters = ['content_type' => 'Article'];
-        if ($this->research_type) {
-            $filters['research_type'] = $this->research_type;
-        }
-        if ($this->body_system) {
-            $filters['body_system'] = $this->body_system;
-        }
-
         return new ContentItem(
             id: "article-{$this->id}",
             title: $this->title,
@@ -61,7 +53,10 @@ class Article extends Model
             url: route('articles.show', $this->slug),
             date: ($this->published_date ?? $this->updated_at)->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
-            filters: $filters,
+            filters: array_filter([
+                'body_system' => $this->body_system,
+                'category' => 'Articles',
+            ]),
         );
     }
 }

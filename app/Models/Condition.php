@@ -65,12 +65,6 @@ class Condition extends Model
             'critical' => 4,
         ];
 
-        $filters = ['content_type' => 'Condition'];
-        if ($this->body_system) {
-            $filters['body_system'] = $this->body_system;
-        }
-        $filters['emergency'] = $this->is_emergency ? 'Emergency' : 'Non-emergency';
-
         return new ContentItem(
             id: "condition-{$this->id}",
             title: $this->lunar_variant_name ?? $this->name,
@@ -81,7 +75,10 @@ class Condition extends Model
             sortable: [
                 'severity' => $severityMap[$this->severity] ?? 2,
             ],
-            filters: $filters,
+            filters: array_filter([
+                'body_system' => $this->body_system,
+                'category' => 'Conditions',
+            ]),
         );
     }
 }

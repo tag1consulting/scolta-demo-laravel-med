@@ -91,14 +91,11 @@ return [
         'date' => 'Last updated date',
     ],
 
-    'filter_fields' => ['body_system', 'content_type', 'emergency', 'drug_class', 'procedure_category', 'research_type'],
+    'filter_fields' => ['body_system', 'drug_class', 'category'],
     'filter_field_descriptions' => [
-        'body_system' => 'Anatomical body system. Map the user\'s query to one of these values: cardiovascular (heart, blood vessels, circulation, blood pressure), respiratory (lungs, breathing, airway, oxygen), musculoskeletal (bones, muscles, joints, spine, fractures), neurological (brain, nerves, spinal cord, headache, seizure), gastrointestinal (stomach, intestines, liver, digestion), dermatological (skin, wounds, burns, rashes), ophthalmological (eyes, vision), psychological (mental health, anxiety, depression, sleep), endocrine (hormones, thyroid, diabetes), renal (kidneys, urinary), hematological (blood disorders, clotting), immunological (immune system, allergies, autoimmune), infectious (bacteria, virus, infection), trauma (injuries, accidents, fractures), toxicological (poisoning, toxins), nutritional (deficiency, diet), oncological (cancer, tumors), reproductive (pregnancy, fertility)',
-        'content_type' => 'Type of medical content. Values: Condition (diseases, injuries, syndromes), Medication (drugs, treatments, pharmaceuticals), Procedure (surgeries, interventions, diagnostic procedures), Anatomy (body structures, organs, systems), Article (research papers, clinical studies)',
-        'emergency' => 'Emergency classification. Values: Emergency (life-threatening, immediate intervention required), Non-emergency (routine, elective, non-urgent)',
-        'drug_class' => 'Pharmacological drug class. Use when the user asks about a specific type of medication (e.g. antibiotics, analgesics, anticoagulants, antidepressants, bronchodilators).',
-        'procedure_category' => 'Procedure category. Values: emergency (acute interventions), surgical (operations), diagnostic (tests, imaging), therapeutic (treatment procedures), first_aid (immediate care)',
-        'research_type' => 'Research article type. Values: clinical_trial (controlled studies), case_study (individual cases), editorial (opinion pieces), equipment_review (device evaluations), perspective (viewpoints), policy (guidelines, protocols)',
+        'body_system' => 'Anatomical body system: cardiovascular, respiratory, musculoskeletal, neurological, gastrointestinal, dermatological, endocrine, hematological, immunological, renal, ophthalmological, psychiatric, reproductive, multi-system. Use this when the user mentions a specific body system or organ group.',
+        'drug_class' => 'Pharmacological drug class for medications: analgesics, antibiotics, antiemetics, antihypertensives, bronchodilators, corticosteroids, diuretics, sedatives, anticoagulants, etc. Use when the user asks about a type of medication.',
+        'category' => 'Content type: Conditions, Medications, Procedures, Anatomy, Articles. Use when the user is looking for a specific kind of medical reference.',
     ],
 
     /*

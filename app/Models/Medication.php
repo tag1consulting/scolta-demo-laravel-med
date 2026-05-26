@@ -59,11 +59,6 @@ class Medication extends Model
             $this->side_effects ? "Side Effects: {$this->side_effects}" : null,
         ]));
 
-        $filters = ['content_type' => 'Medication'];
-        if ($this->drug_class) {
-            $filters['drug_class'] = $this->drug_class;
-        }
-
         return new ContentItem(
             id: "medication-{$this->id}",
             title: $this->generic_name,
@@ -71,7 +66,10 @@ class Medication extends Model
             url: route('medications.show', $this->slug),
             date: $this->updated_at->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
-            filters: $filters,
+            filters: array_filter([
+                'drug_class' => $this->drug_class,
+                'category' => 'Medications',
+            ]),
         );
     }
 }
