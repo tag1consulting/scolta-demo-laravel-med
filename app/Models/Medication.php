@@ -66,6 +66,10 @@ class Medication extends Model
             url: route('medications.show', $this->slug),
             date: $this->updated_at->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
+            filters: array_filter([
+                'drug_class' => $this->drug_class,
+                'category' => 'Medications',
+            ]),
         );
     }
 }

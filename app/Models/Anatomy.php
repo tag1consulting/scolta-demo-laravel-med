@@ -48,6 +48,10 @@ class Anatomy extends Model
             url: route('anatomy.show', $this->slug),
             date: $this->updated_at->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
+            filters: array_filter([
+                'body_system' => $this->body_system,
+                'category' => 'Anatomy',
+            ]),
         );
     }
 }

@@ -85,6 +85,18 @@ return [
     ],
 
     'sortable_fields' => ['severity', 'risk_level', 'date'],
+    'sortable_field_descriptions' => [
+        'severity' => 'Medical condition severity (1=minor, 2=moderate, 3=severe, 4=critical)',
+        'risk_level' => 'Procedure risk level (1=low, 2=medium, 3=high, 4=critical)',
+        'date' => 'Last updated date',
+    ],
+
+    'filter_fields' => ['body_system', 'drug_class', 'category'],
+    'filter_field_descriptions' => [
+        'body_system' => 'Anatomical body system: cardiovascular, respiratory, musculoskeletal, neurological, gastrointestinal, dermatological, endocrine, hematological, immunological, renal, ophthalmological, psychiatric, reproductive, multi-system. Use this when the user mentions a specific body system or organ group.',
+        'drug_class' => 'Pharmacological drug class for medications: analgesics, antibiotics, antiemetics, antihypertensives, bronchodilators, corticosteroids, diuretics, sedatives, anticoagulants, etc. Use when the user asks about a type of medication.',
+        'category' => 'Content type: Conditions, Medications, Procedures, Anatomy, Articles. Use when the user is looking for a specific kind of medical reference.',
+    ],
 
     /*
     |--------------------------------------------------------------------------

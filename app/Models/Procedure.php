@@ -69,6 +69,9 @@ class Procedure extends Model
             sortable: [
                 'risk_level' => $riskMap[$this->risk_level] ?? 2,
             ],
+            filters: array_filter([
+                'category' => $this->category ?: 'Procedures',
+            ]),
         );
     }
 }

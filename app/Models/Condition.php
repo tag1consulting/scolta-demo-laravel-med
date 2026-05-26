@@ -75,6 +75,10 @@ class Condition extends Model
             sortable: [
                 'severity' => $severityMap[$this->severity] ?? 2,
             ],
+            filters: array_filter([
+                'body_system' => $this->body_system,
+                'category' => 'Conditions',
+            ]),
         );
     }
 }
