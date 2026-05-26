@@ -41,6 +41,11 @@ class Anatomy extends Model
             $this->lunar_adaptation_2y ? "Long-Term Resident (2+ Years): {$this->lunar_adaptation_2y}" : null,
         ]));
 
+        $filters = ['content_type' => 'Anatomy'];
+        if ($this->body_system) {
+            $filters['body_system'] = $this->body_system;
+        }
+
         return new ContentItem(
             id: "anatomy-{$this->id}",
             title: $this->name,
@@ -48,6 +53,7 @@ class Anatomy extends Model
             url: route('anatomy.show', $this->slug),
             date: $this->updated_at->format('Y-m-d'),
             siteName: config('scolta.site_name', 'Medical On The Moon'),
+            filters: $filters,
         );
     }
 }

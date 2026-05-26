@@ -85,6 +85,21 @@ return [
     ],
 
     'sortable_fields' => ['severity', 'risk_level', 'date'],
+    'sortable_field_descriptions' => [
+        'severity' => 'Medical condition severity (1=minor, 2=moderate, 3=severe, 4=critical)',
+        'risk_level' => 'Procedure risk level (1=low, 2=medium, 3=high, 4=critical)',
+        'date' => 'Last updated date',
+    ],
+
+    'filter_fields' => ['body_system', 'content_type', 'emergency', 'drug_class', 'procedure_category', 'research_type'],
+    'filter_field_descriptions' => [
+        'body_system' => 'Anatomical body system. Map the user\'s query to one of these values: cardiovascular (heart, blood vessels, circulation, blood pressure), respiratory (lungs, breathing, airway, oxygen), musculoskeletal (bones, muscles, joints, spine, fractures), neurological (brain, nerves, spinal cord, headache, seizure), gastrointestinal (stomach, intestines, liver, digestion), dermatological (skin, wounds, burns, rashes), ophthalmological (eyes, vision), psychological (mental health, anxiety, depression, sleep), endocrine (hormones, thyroid, diabetes), renal (kidneys, urinary), hematological (blood disorders, clotting), immunological (immune system, allergies, autoimmune), infectious (bacteria, virus, infection), trauma (injuries, accidents, fractures), toxicological (poisoning, toxins), nutritional (deficiency, diet), oncological (cancer, tumors), reproductive (pregnancy, fertility)',
+        'content_type' => 'Type of medical content. Values: Condition (diseases, injuries, syndromes), Medication (drugs, treatments, pharmaceuticals), Procedure (surgeries, interventions, diagnostic procedures), Anatomy (body structures, organs, systems), Article (research papers, clinical studies)',
+        'emergency' => 'Emergency classification. Values: Emergency (life-threatening, immediate intervention required), Non-emergency (routine, elective, non-urgent)',
+        'drug_class' => 'Pharmacological drug class. Use when the user asks about a specific type of medication (e.g. antibiotics, analgesics, anticoagulants, antidepressants, bronchodilators).',
+        'procedure_category' => 'Procedure category. Values: emergency (acute interventions), surgical (operations), diagnostic (tests, imaging), therapeutic (treatment procedures), first_aid (immediate care)',
+        'research_type' => 'Research article type. Values: clinical_trial (controlled studies), case_study (individual cases), editorial (opinion pieces), equipment_review (device evaluations), perspective (viewpoints), policy (guidelines, protocols)',
+    ],
 
     /*
     |--------------------------------------------------------------------------
