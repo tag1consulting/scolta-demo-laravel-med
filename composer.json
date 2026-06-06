@@ -4,16 +4,6 @@
     "type": "project",
     "description": "Medical On The Moon \u2014 a lunar medical reference site demonstrating Scolta search quality enhancement.",
     "license": "MIT",
-    "repositories": {
-        "scolta-php": {
-            "type": "vcs",
-            "url": "https://github.com/tag1consulting/scolta-php"
-        },
-        "scolta-laravel": {
-            "type": "vcs",
-            "url": "https://github.com/tag1consulting/scolta-laravel"
-        }
-    },
     "require": {
         "php": "^8.3",
         "laravel/framework": "^11.31",
@@ -68,6 +58,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
