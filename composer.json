@@ -8,7 +8,7 @@
         "php": "^8.3",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
-        "tag1/scolta-laravel": "^1.0.5"
+        "tag1/scolta-laravel": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -58,5 +58,10 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [{
+        "name": "scolta-laravel",
+        "type": "vcs",
+        "url": "https://github.com/tag1consulting/scolta-laravel"
+    }]
 }
