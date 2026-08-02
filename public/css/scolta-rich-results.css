@@ -1,0 +1,269 @@
+/**
+ * Medical On The Moon styling for Scolta's result cards and search-as-you-type
+ * dropdown.
+ *
+ * Loaded after the package's scolta.css, which is never edited. Two techniques
+ * only: override the documented custom properties, and style the app's own
+ * mottm-* classes on the markup its renderers emit. No selector here is more
+ * specific than one class.
+ *
+ * A plain stylesheet under public/ rather than a Vite entry, matching how
+ * public/vendor/scolta/scolta.css is already served. It has to load after that
+ * file to win the custom-property redeclarations at the same specificity, and
+ * a static file with an explicit link makes that ordering something you can
+ * read rather than something the bundler decides.
+ *
+ * The card keeps Scolta's scolta-result-card, scolta-result-title and
+ * scolta-result-excerpt classes, so anything app.css already gives a result
+ * still applies and this file adds only what the badge row needs.
+ *
+ * Colours are the lunar scale from tailwind.config.js, written literally
+ * because this file is outside the Tailwind build.
+ */
+
+:root {
+  --scolta-primary: #1b3860;
+  --scolta-primary-hover: #0e2040;
+  --scolta-accent: #2c5280;
+  --scolta-bg: #f2f7fc;
+  --scolta-card-bg: #ffffff;
+  --scolta-text: #1b3860;
+  --scolta-text-muted: #5f7f97;
+  --scolta-text-light: #8dafc8;
+  --scolta-border: #c8daea;
+  /* The blue tint app.css already forces onto every <mark> under
+     #scolta-search, so anything else Scolta tints with this property
+     matches the highlight a reader sees in the excerpts. */
+  --scolta-highlight: rgba(37, 99, 235, 0.12);
+  --scolta-badge-bg: #e3edf6;
+
+  /* Search-as-you-type. The seven documented knobs, nothing more. */
+  --scolta-sayt-bg: #ffffff;
+  --scolta-sayt-border: #c8daea;
+  --scolta-sayt-shadow: 0 8px 24px rgba(14, 32, 64, 0.16);
+  --scolta-sayt-radius: 10px;
+  --scolta-sayt-max-height: 24rem;
+  --scolta-sayt-active-bg: #e3edf6;
+  --scolta-sayt-z-index: 60;
+}
+
+/* --------------------------------------------------------------------------
+ * Result card
+ *
+ * Text-forward on purpose: this reference has no per-item image, so the card's
+ * job is to answer "what kind of reference is this, whose system, how urgent"
+ * before the click, not to carry a picture.
+ * ----------------------------------------------------------------------- */
+
+.mottm-result__title {
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.mottm-result__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.4rem 0 0.5rem;
+}
+
+/* The neutral chip. Every badge starts here; only urgency moves off it. */
+.mottm-result__badge {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.16rem 0.5rem;
+  border: 1px solid #c8daea;
+  border-radius: 4px;
+  background: #e3edf6;
+  color: #2c5280;
+  white-space: nowrap;
+}
+
+/* A body system or drug class is a classification, not a label the reader is
+   meant to act on, so it stays quiet: outlined rather than filled. Drug class
+   strings on this corpus run long ("Beta-Lactam Antibiotic (Aminopenicillin)
+   — Analogue"), so this is also the one badge allowed to truncate. */
+.mottm-result__badge--system {
+  background: #ffffff;
+  color: #5f7f97;
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Urgency is the one badge that is a judgement rather than a label, so it is
+   the one that gets colour. Uppercase as well as coloured: colour alone is not
+   a distinction every reader can use, and the word carries the meaning either
+   way. */
+.mottm-result__badge--urgency {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.mottm-result__badge--red {
+  border-color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+}
+
+.mottm-result__badge--amber {
+  border-color: #d97706;
+  background: rgba(217, 119, 6, 0.09);
+  color: #b45309;
+}
+
+.mottm-result__badge--neutral {
+  border-color: #8dafc8;
+  background: #e3edf6;
+  color: #2c5280;
+}
+
+.mottm-result__badge--green {
+  border-color: #059669;
+  background: rgba(5, 150, 105, 0.08);
+  color: #047857;
+}
+
+.mottm-result__excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * Search-as-you-type dropdown
+ *
+ * Layout and rhythm only. The dropdown stays absolutely positioned inside
+ * .scolta-search-input-wrap, so opening and updating it shifts nothing.
+ * ----------------------------------------------------------------------- */
+
+.scolta-sayt {
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 0.25rem 0;
+}
+
+.scolta-sayt-option {
+  padding: 0.55rem 0.9rem;
+  border-bottom: none;
+  border-left: 3px solid transparent;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.scolta-sayt-option:hover {
+  background: #f2f7fc;
+}
+
+.scolta-sayt-option-active {
+  border-left-color: #2c5280;
+}
+
+.scolta-sayt-kind {
+  color: #507da8;
+  font-size: 0.95rem;
+}
+
+.scolta-sayt-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1b3860;
+}
+
+/* A recent search is history, not a reference entry: lighter and italic, so
+   the two kinds of row are told apart without reading the glyph. */
+.scolta-sayt-option-recent .scolta-sayt-kind {
+  color: #8dafc8;
+}
+
+.scolta-sayt-option-recent .scolta-sayt-title {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.scolta-sayt-excerpt {
+  font-size: 0.8rem;
+  color: #5f7f97;
+  margin-top: 0.1rem;
+}
+
+/* --------------------------------------------------------------------------
+ * Suggestion row with a reference-type tag
+ *
+ * Inner markup emitted by the suggestion renderer in
+ * public/js/scolta-rich-results.js for title suggestions. The option element
+ * around it stays the bundle's, so the rules below never reach past the row's
+ * inside.
+ *
+ * Title and excerpt carry the scolta-* class as well as the mottm-* one, so
+ * they inherit the typography set above and these rules add only layout. Same
+ * specificity, resolved by source order — this block is last.
+ * ----------------------------------------------------------------------- */
+
+.mottm-sayt {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Fixed width, so every row's title starts on the same line whether or not
+   the entry has a type, and a longer type name cannot push one row's text out
+   of column with its neighbours. Sized for "Medications", the widest value in
+   the five-value vocabulary; the ellipsis stays as the guard for a content
+   type added later. */
+.mottm-sayt__type {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 7.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.16rem 0.4rem;
+  border: 1px solid #c8daea;
+  border-radius: 4px;
+  background: #e3edf6;
+  color: #2c5280;
+}
+
+/* Sized, not drawn: a suggestion with no type keeps the column so the list
+   still reads as one list, without painting an empty box. */
+.mottm-sayt__type--empty {
+  border-color: transparent;
+  background: none;
+}
+
+.mottm-sayt__text {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+/* One line each, ellipsised. A suggestion is a pointer, not a summary, and a
+   row that wrapped would resize the dropdown on every keystroke. */
+.mottm-sayt__title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Overrides the glyph gutter scolta.css gives an excerpt: in this row the type
+   tag is the gutter, and the text column is already indented. */
+.mottm-sayt__excerpt {
+  display: block;
+  margin-top: 0.05rem;
+  margin-left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

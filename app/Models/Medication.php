@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Tag1\ScoltaLaravel\Searchable;
+use App\Support\ScoltaCard;
 use Tag1\Scolta\Export\ContentItem;
 
 class Medication extends Model
@@ -69,6 +70,10 @@ class Medication extends Model
             filters: array_filter([
                 'drug_class' => $this->drug_class,
                 'category' => 'Medications',
+            ]),
+            metadata: ScoltaCard::metadata([
+                ['type', 'Medications'],
+                ['system', $this->drug_class],
             ]),
         );
     }

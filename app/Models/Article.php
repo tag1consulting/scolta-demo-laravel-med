@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Tag1\ScoltaLaravel\Searchable;
+use App\Support\ScoltaCard;
 use Tag1\Scolta\Export\ContentItem;
 
 class Article extends Model
@@ -56,6 +57,10 @@ class Article extends Model
             filters: array_filter([
                 'body_system' => $this->body_system,
                 'category' => 'Articles',
+            ]),
+            metadata: ScoltaCard::metadata([
+                ['type', 'Articles'],
+                ['system', $this->body_system],
             ]),
         );
     }
