@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Tag1\ScoltaLaravel\Searchable;
+use App\Support\ScoltaCard;
 use Tag1\Scolta\Export\ContentItem;
 
 class Procedure extends Model
@@ -71,6 +72,10 @@ class Procedure extends Model
             ],
             filters: array_filter([
                 'category' => $this->category ?: 'Procedures',
+            ]),
+            metadata: ScoltaCard::metadata([
+                ['type', $this->category ?: 'Procedures'],
+                ['urgency', $this->risk_level],
             ]),
         );
     }

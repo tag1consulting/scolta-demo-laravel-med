@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Tag1\ScoltaLaravel\Searchable;
+use App\Support\ScoltaCard;
 use Tag1\Scolta\Export\ContentItem;
 
 class Condition extends Model
@@ -78,6 +79,16 @@ class Condition extends Model
             filters: array_filter([
                 'body_system' => $this->body_system,
                 'category' => 'Conditions',
+            ]),
+            // Urgency first: on a reference used in an emergency, whether a
+            // condition is one is the fact that decides whether to open the
+            // result at all. is_emergency is a flag rather than a graded
+            // level, so it outranks severity and stands in for it.
+            metadata: ScoltaCard::metadata([
+                ['urgency', $this->is_emergency ? 'Emergency' : null],
+                ['type', 'Conditions'],
+                ['system', $this->body_system],
+                ['urgency', $this->severity],
             ]),
         );
     }

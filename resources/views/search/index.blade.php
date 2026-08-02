@@ -65,3 +65,27 @@
 
 </div>
 @endsection
+
+{{--
+    Result cards and the themed search-as-you-type dropdown.
+
+    Pushed onto the layout's script stack rather than emitted inline above,
+    because both files have to land after the ones <x-scolta::search /> emits.
+    The stack renders at the end of the body, so document order puts them
+    second; the script carries defer exactly as the component's does, and defer
+    preserves document order while still running everything before
+    DOMContentLoaded — which is the window Scolta.init() leaves the renderers
+    to register in. The stylesheet has to be second for the same reason: it
+    redeclares Scolta's documented custom properties at the same specificity.
+
+    filemtime cache-busts the same way the component does, so a deploy cannot
+    serve a stale renderer against a fresh bundle.
+--}}
+@push('scripts')
+    @if(file_exists(public_path('css/scolta-rich-results.css')))
+        <link rel="stylesheet" href="{{ asset('css/scolta-rich-results.css') . '?v=' . filemtime(public_path('css/scolta-rich-results.css')) }}" />
+    @endif
+    @if(file_exists(public_path('js/scolta-rich-results.js')))
+        <script src="{{ asset('js/scolta-rich-results.js') . '?v=' . filemtime(public_path('js/scolta-rich-results.js')) }}" defer></script>
+    @endif
+@endpush

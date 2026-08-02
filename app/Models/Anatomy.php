@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Tag1\ScoltaLaravel\Searchable;
+use App\Support\ScoltaCard;
 use Tag1\Scolta\Export\ContentItem;
 
 class Anatomy extends Model
@@ -51,6 +52,10 @@ class Anatomy extends Model
             filters: array_filter([
                 'body_system' => $this->body_system,
                 'category' => 'Anatomy',
+            ]),
+            metadata: ScoltaCard::metadata([
+                ['type', 'Anatomy'],
+                ['system', $this->body_system],
             ]),
         );
     }
